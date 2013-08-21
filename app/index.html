@@ -6,8 +6,8 @@
     <!-- http://stackoverflow.com/questions/6771258/ -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>CyanogenMod Account</title>
-    <!-- build:css /css/app.css -->
-    <link href="/less/cmid.less" rel="stylesheet/less">
+    <!-- build:css /static/css/app.css -->
+    <link href="/static/less/cmid.less" rel="stylesheet/less">
     <!-- endbuild -->
     <!--(if target dev)><!-->
     <script src="/bower_components/less.js/dist/less-1.4.2.min.js"></script>
@@ -34,7 +34,7 @@
           <span class="icon-bar"></span>
         </button>
 
-        <a class="navbar-brand" href="/"><img src="/img/logo.png" alt="CyanogenMod Account"></a>
+        <a class="navbar-brand" href="/"><img src="/static/img/logo.png" alt="CyanogenMod Account"></a>
 
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav pull-right">
@@ -83,7 +83,7 @@
     </div>
 
     <!-- Libraries -->
-    <!-- build:js(.) /js/vendor.js -->
+    <!-- build:js(.) /static/js/vendor.js -->
     <script src="/bower_components/lodash/dist/lodash.min.js"></script>
     <script src="/bower_components/jquery/jquery.min.js"></script>
     <script src="/bower_components/angular/angular.min.js"></script>
@@ -102,36 +102,36 @@
     <script src="/_ah/channel/jsapi"></script>
     
     <!-- Application -->
-    <!-- build:js(./app) /js/encryption.js -->
-    <script src="/js/vendor/jsencrypt.js"></script>
+    <!-- build:js(./appengine) /static/js/encryption.js -->
+    <script src="/static/js/vendor/jsencrypt.js"></script>
     <!-- endbuild -->
-    <!-- build:js(./app) /js/cryptojs.js -->
-    <script src="/js/vendor/cryptojs/core.js"></script>
-    <script src="/js/vendor/cryptojs/x64-core.js"></script>
-    <script src="/js/vendor/cryptojs/enc-base64.js"></script>
-    <script src="/js/vendor/cryptojs/md5.js"></script>
-    <script src="/js/vendor/cryptojs/sha512.js"></script>
-    <script src="/js/vendor/cryptojs/evpkdf.js"></script>
-    <script src="/js/vendor/cryptojs/cipher-core.js"></script>
-    <script src="/js/vendor/cryptojs/aes.js"></script>
-    <script src="/js/vendor/cryptojs/hmac.js"></script>
+    <!-- build:js(./appengine) /static/js/cryptojs.js -->
+    <script src="/static/js/vendor/cryptojs/core.js"></script>
+    <script src="/static/js/vendor/cryptojs/x64-core.js"></script>
+    <script src="/static/js/vendor/cryptojs/enc-base64.js"></script>
+    <script src="/static/js/vendor/cryptojs/md5.js"></script>
+    <script src="/static/js/vendor/cryptojs/sha512.js"></script>
+    <script src="/static/js/vendor/cryptojs/evpkdf.js"></script>
+    <script src="/static/js/vendor/cryptojs/cipher-core.js"></script>
+    <script src="/static/js/vendor/cryptojs/aes.js"></script>
+    <script src="/static/js/vendor/cryptojs/hmac.js"></script>
     <!-- endbuild -->
-    <!-- build:js(./app) /js/translations.js -->
-    <script src="/js/translations/en-us.js"></script>
+    <!-- build:js(./appengine) /static/js/translations.js -->
+    <script src="/static/js/translations/en-us.js"></script>
     <!-- endbuild -->
-    <!-- build:js(./app) /js/app.js -->
-    <script src="/js/vendor/retina.js"></script>
-    <script src="/js/vendor/angular-l10n.js"></script>
-    <script src="/js/cmid/logging.js"></script>
+    <!-- build:js(./appengine) /static/js/app.js -->
+    <script src="/static/js/vendor/retina.js"></script>
+    <script src="/static/js/vendor/angular-l10n.js"></script>
+    <script src="/static/js/cmid/logging.js"></script>
 
-    <script src="/js/cmid/storage.js"></script>
-    <script src="/js/cmid/utils.js"></script>
-    <script src="/js/cmid/api.js"></script>
-    <script src="/js/cmid/channel.js"></script>
-    <script src="/js/cmid/maps.js"></script>
-    <script src="/js/cmid/directives.js"></script>
-    <script src="/js/cmid/controllers.js"></script>
-    <script src="/js/cmid/app.js"></script>
+    <script src="/static/js/cmid/storage.js"></script>
+    <script src="/static/js/cmid/utils.js"></script>
+    <script src="/static/js/cmid/api.js"></script>
+    <script src="/static/js/cmid/channel.js"></script>
+    <script src="/static/js/cmid/maps.js"></script>
+    <script src="/static/js/cmid/directives.js"></script>
+    <script src="/static/js/cmid/controllers.js"></script>
+    <script src="/static/js/cmid/app.js"></script>
     <!-- endbuild -->
 
     <script>
