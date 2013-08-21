@@ -11,6 +11,7 @@
         "grunt-contrib-imagemin": "~0.1.4",
 
         "grunt-usemin": "~0.1.12",
-        "grunt-ngmin": "~0.0.2"
+        "grunt-ngmin": "~0.0.2",
+        "grunt-targethtml": "~0.2.4"
     }
 }

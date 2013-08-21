@@ -13,6 +13,7 @@ module.exports = function(grunt) {
 
     copy: {
       all: { files: [
+        { expand: true, src: 'manifest.json', dest: 'dist/' },
         { expand: true, cwd: 'app/', src: 'index.html', dest: 'dist/' },
         { expand: true, cwd: 'app/', src: 'partials/**/*.html', dest: 'dist/' }
       ]}
@@ -49,6 +50,10 @@ module.exports = function(grunt) {
       html: ['dist/index.html'],
       options: { dirs: ['dist/'] }
     },
+
+    targethtml: {
+      all: { files: { "dist/index.html": "dist/index.html" } }
+    },
   });
 
   // Task for building the chrome extension
@@ -61,5 +66,6 @@ module.exports = function(grunt) {
     'less',
     'imagemin',
     'usemin',
+    'targethtml',
   ]);
 };
