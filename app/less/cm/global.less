@@ -1,0 +1,31 @@
+body {
+    padding-top: @navbar-height;
+    background-color: @body-background-color;
+}
+
+.container.content {
+    margin-top: 20px;
+}
+
+.loading {
+    position: fixed;
+    top: 20px;
+
+    width: 100%;
+    z-index: 2000;
+
+    text-align: center;
+
+    > span {
+        padding: 5px 9px 5px 10px;
+        background: lighten(@holo-blue, 30%);
+        border: 1px solid @holo-blue;
+        color: darken(@holo-blue, 30%);
+        .box-shadow(0 0 5px rgba(12,67,95,.2));
+
+        > i {
+            color: darken(@holo-blue, 30%);
+            margin-right: 5px;
+        }
+    }
+}

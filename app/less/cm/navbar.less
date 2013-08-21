@@ -1,0 +1,46 @@
+.navbar {
+    font-size: 15px;
+    font-weight: 300;
+    #gradient > .vertical(@start-color: @navbar-bg-start; @end-color: @navbar-bg);
+    border-bottom: 1px solid #c7c7c7;
+    .box-shadow(0 1px 4px rgba(0,0,0,.065));
+}
+
+.navbar-brand {
+    position: fixed;
+    display: block;
+    padding: 0 20px;
+    margin-top: -5px;
+    z-index: 2000;
+}
+
+@media (max-width: @screen-phone) {
+    .navbar-brand {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+.navbar .nav > li {
+    border-bottom: 3px solid transparent;
+
+    &.active,
+    &:hover {
+        border-bottom-color: @holo-blue;
+    }
+
+    &.active > a {
+        background-color: transparent;
+    }
+
+    > a {
+        color: @navbar-default-link-color;
+        padding-bottom: 17px;
+
+        &:hover {
+            color: @navbar-default-link-hover-color;
+            background-color: @navbar-default-link-hover-bg;
+        }
+    }
+}

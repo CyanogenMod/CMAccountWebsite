@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" id="ng-app" data-ng-app="cmid">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <!-- http://stackoverflow.com/questions/6771258/ -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>CyanogenMod Account</title>
+    <!-- build:css /static/css/app.css -->
+    <link href="/static/less/cmid.less" rel="stylesheet/less">
+    <!-- endbuild -->
+    <!--(if target dev)><!-->
+    <script src="/bower_components/less.js/dist/less-1.4.2.min.js"></script>
+    <!--<!(endif)-->
+    <style type="text/css">
+      @charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak{display:none;}ng\:form{display:block;}
+    </style>
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+    <![endif]-->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.2.4/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- begin navbar -->
+    <div class="navbar navbar-fixed-top">
+      <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+
+        <a class="navbar-brand" href="/"><img src="/static/img/logo.png" alt="CyanogenMod Account"></a>
+
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+          <ul class="nav navbar-nav pull-right">
+            <li><a href="http://www.cyanogenmod.org/about" data-l10n-text="navbar.about">About</a></li>
+            <li><a href="http://download.cyanogenmod.org/" data-l10n-text="navbar.download">Download</a></li>
+            <li><a href="http://www.cyanogenmod.org/devices" data-l10n-text="navbar.devices">Devices</a></li>
+            <li><a href="http://www.cyanogenmod.org/blog" data-l10n-text="navbar.blog">Blog</a></li>
+            <li><a href="http://forum.cyanogenmod.org/" data-l10n-text="navbar.forum">Forum</a></li>
+            <li><a href="http://www.cyanogenmod.org/community" data-l10n-text="navbar.community">Community</a></li>
+            <li class="active"><a href="#" data-l10n-text="navbar.account">Account</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+    <!-- end navbar -->
+
+    <!-- subnav -->
+    <div class="row cm-nav-tabs ng-cloak" data-ng-hide="!authenticated">
+      <div class="container" data-bs-navbar>
+        <ul class="nav cm-nav-tabs">
+          <li data-match-route="/device(s|/.*)?"><a href="/devices" data-l10n-text="navbar.devices">Devices</a></li>
+          <li data-match-route="/account"><a href="/account" data-l10n-text="navbar.account">Account</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- end subnav -->
+
+    <!-- loading status -->
+    <div class="loading" data-ng-show="polling"><span><i class="icon-refresh icon-spin"></i> Loading ...</span></div>
+    <!-- /loading status -->
+
+    <div class="container content">
+      <!--[if lt IE 10]>
+      <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Unsupported Browser!</strong>
+        You are using a browser that is not fully supported.  Please consider <a class="alert-link" href="http://www.browsehappy.com/" target="_blank">upgrading your browser</a> for a better experience.
+      </div>
+      <![endif]-->
+      <div data-ng-show="networkError && !loginController" class="alert alert-danger" style="display: none">
+        <strong>Network Error!</strong>
+        There was an unexpected error while making a network request.  Please try <a class="alert-link" href="javascript:location.reload()">reloading the page</a>.
+      </div>
+      <div data-ng-view></div>
+    </div>
+
+    <!-- Libraries -->
+    <!-- build:js(.) /static/js/vendor.js -->
+    <script src="/bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="/bower_components/jquery/jquery.min.js"></script>
+    <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/angular/angular-resource.min.js"></script>
+    <script src="/bower_components/angular/angular-route.min.js"></script>
+    
+    <script src="/bower_components/bootstrap/js/alert.js"></script>
+    <script src="/bower_components/bootstrap/js/collapse.js"></script>
+    <script src="/bower_components/bootstrap/js/tooltip.js"></script>
+    <script src="/bower_components/angulartics/src/angulartics.js"></script>
+    <script src="/bower_components/angulartics/src/angulartics-ga.js"></script>
+    <!-- endbuild -->
+
+    <!-- External Libraries -->
+    <script src="//maps.googleapis.com/maps/api/js?sensor=false&language=en"></script>
+    <script src="/_ah/channel/jsapi"></script>
+    
+    <!-- Application -->
+    <!-- build:js(./appengine) /static/js/encryption.js -->
+    <script src="/static/js/vendor/jsencrypt.js"></script>
+    <!-- endbuild -->
+    <!-- build:js(./appengine) /static/js/cryptojs.js -->
+    <script src="/static/js/vendor/cryptojs/core.js"></script>
+    <script src="/static/js/vendor/cryptojs/x64-core.js"></script>
+    <script src="/static/js/vendor/cryptojs/enc-base64.js"></script>
+    <script src="/static/js/vendor/cryptojs/md5.js"></script>
+    <script src="/static/js/vendor/cryptojs/sha512.js"></script>
+    <script src="/static/js/vendor/cryptojs/evpkdf.js"></script>
+    <script src="/static/js/vendor/cryptojs/cipher-core.js"></script>
+    <script src="/static/js/vendor/cryptojs/aes.js"></script>
+    <script src="/static/js/vendor/cryptojs/hmac.js"></script>
+    <!-- endbuild -->
+    <!-- build:js(./appengine) /static/js/translations.js -->
+    <script src="/static/js/translations/en-us.js"></script>
+    <!-- endbuild -->
+    <!-- build:js(./appengine) /static/js/app.js -->
+    <script src="/static/js/vendor/retina.js"></script>
+    <script src="/static/js/vendor/angular-l10n.js"></script>
+    <script src="/static/js/cmid/logging.js"></script>
+
+    <script src="/static/js/cmid/storage.js"></script>
+    <script src="/static/js/cmid/utils.js"></script>
+    <script src="/static/js/cmid/api.js"></script>
+    <script src="/static/js/cmid/channel.js"></script>
+    <script src="/static/js/cmid/maps.js"></script>
+    <script src="/static/js/cmid/directives.js"></script>
+    <script src="/static/js/cmid/controllers.js"></script>
+    <script src="/static/js/cmid/app.js"></script>
+    <!-- endbuild -->
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-39737599-8', {'cookieDomain': 'none'});
+    </script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+div.cm-nav-tabs {
+    padding-top: 3px;
+    border-bottom: 3px solid @nav-tabs-border-color;
+}
+
+.cm-nav-tabs {
+    background: @nav-tabs-bg;
+    //border-bottom: 3px solid @nav-tabs-border-color;
+
+    > li {
+        float: left;
+        margin-bottom: -3px;
+        border-bottom: 3px solid @nav-tabs-border-color;
+
+        &.active,
+        &:hover {
+            border-color: lighten(@holo-blue, 10%);
+        }
+
+        > a {
+            font-weight: bold;
+            color: @nav-tabs-link-color;
+            padding: 0px 20px;
+            margin: 8px 0px;
+            border-right: 1px solid @nav-tabs-border-color;
+            line-height: @line-height-base;
+
+            &:hover {
+                background-color: transparent;
+            }
+        }
+
+        // Active state, and it's :hover to override normal :hover
+        &.active > a {
+            &,
+            &:hover,
+            &:focus {
+                color: @nav-tabs-link-hover-color;
+                cursor: default;
+            }
+        }
+
+        // Do not have a border on the last link
+        &:last-child > a {
+            border-right-color: transparent;
+        }
+    }
+
+    // pulling this in mainly for less shorthand
+    &.nav-justified {
+        .nav-justified();
+        .nav-tabs-justified();
+    }
+}

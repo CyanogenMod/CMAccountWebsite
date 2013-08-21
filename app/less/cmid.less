@@ -1,0 +1,187 @@
+@import url(//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,900italic,900,700italic);
+
+// Core variables and mixins
+@import "/bower_components/bootstrap/less/variables.less";
+@import "/bower_components/bootstrap/less/mixins.less";
+@import "/bower_components/font-awesome/less/variables.less";
+@import "/bower_components/font-awesome/less/mixins.less";
+@import "cm/variables.less";
+
+// Reset
+@import "/bower_components/bootstrap/less/normalize.less";
+@import "/bower_components/bootstrap/less/print.less";
+
+// Core CSS
+@import "/bower_components/bootstrap/less/scaffolding.less";
+@import "/bower_components/bootstrap/less/type.less";
+@import "/bower_components/bootstrap/less/code.less";
+@import "/bower_components/bootstrap/less/grid.less";
+
+@import "/bower_components/bootstrap/less/tables.less";
+@import "/bower_components/bootstrap/less/forms.less";
+@import "/bower_components/bootstrap/less/buttons.less";
+
+// Components: common
+@import "/bower_components/bootstrap/less/component-animations.less";
+@import "/bower_components/bootstrap/less/input-groups.less";
+@import "/bower_components/bootstrap/less/dropdowns.less";
+@import "/bower_components/bootstrap/less/list-group.less";
+@import "/bower_components/bootstrap/less/panels.less";
+@import "/bower_components/bootstrap/less/wells.less";
+@import "/bower_components/bootstrap/less/close.less";
+
+// Components: Nav
+@import "/bower_components/bootstrap/less/navs.less";
+@import "/bower_components/bootstrap/less/navbar.less";
+@import "/bower_components/bootstrap/less/button-groups.less";
+@import "/bower_components/bootstrap/less/breadcrumbs.less";
+@import "/bower_components/bootstrap/less/pagination.less";
+@import "/bower_components/bootstrap/less/pager.less";
+
+// Components: Popovers
+@import "/bower_components/bootstrap/less/modals.less";
+@import "/bower_components/bootstrap/less/tooltip.less";
+@import "/bower_components/bootstrap/less/popovers.less";
+
+// Components: Misc
+@import "/bower_components/bootstrap/less/alerts.less";
+@import "/bower_components/bootstrap/less/thumbnails.less";
+@import "/bower_components/bootstrap/less/media.less";
+@import "/bower_components/bootstrap/less/labels.less";
+@import "/bower_components/bootstrap/less/badges.less";
+@import "/bower_components/bootstrap/less/progress-bars.less";
+@import "/bower_components/bootstrap/less/carousel.less";
+@import "/bower_components/bootstrap/less/jumbotron.less";
+
+// Utility classes
+@import "/bower_components/bootstrap/less/utilities.less";
+@import "/bower_components/bootstrap/less/responsive-utilities.less";
+
+// Font-Awesome
+@import "/bower_components/font-awesome/less/path.less";
+@import "/bower_components/font-awesome/less/core.less";
+@import "/bower_components/font-awesome/less/bootstrap.less";
+@import "/bower_components/font-awesome/less/extras.less";
+@import "/bower_components/font-awesome/less/icons.less";
+
+// Components: CyanogenMod
+@import "/bower_components/bootstrap/less/theme.less";
+@import "cm/global.less";
+@import "cm/navbar.less";
+@import "cm/tabbednav.less";
+@import "cm/chromeframe.less";
+
+// Google Maps
+.google-map {
+    height: 400px;
+    display: block;
+	border: 1px #ccc solid;
+}
+
+.google-map img {
+    max-width: none;
+}
+
+.google-map label {
+    width: auto;
+    display: inline;
+}
+
+// ID Card
+.idcard {
+    margin-top: 56px;
+    .idcard-content {
+        margin-left: 80px;
+    }
+
+    img {
+        margin-right: 10px;
+        position: absolute;
+    }
+
+    dl.dl-horizontal {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        > dt {
+            padding-left: 2px;
+            padding-top: 2px;
+            width: 16px;
+            text-align: center;
+
+            > i {
+                color: @gray-light;
+            }
+        }
+        > dd {
+            padding-top: 2px;
+            margin-left: 24px;
+        }
+    }
+
+    h3 {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.device-detail {
+    .make-row();
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-bottom:1px dotted @gray-lighter;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    > span:first-child {
+        font-weight: 600;
+        text-align: left;
+        color: @gray;
+       
+        .make-md-column(5);
+        padding-left: 5px;
+    }
+
+
+    > span:last-child {
+        .make-md-column(7);
+        padding-left: 0px;
+    }
+}
+
+.device-detail-block > span {
+    width: 100% !important;
+    padding-left: 15px !important;
+}
+
+// Tablets
+@media(min-width: @screen-tablet) {
+    .device-detail {
+        > span:first-child { .make-sm-column(5); }
+        > span:last-child { .make-sm-column(7); }
+    }
+}
+
+// Phones
+@media(max-width: @screen-tablet) {
+    .device-detail {
+        > span { padding-bottom: 5px; padding-left: 0px !important; }
+        > span:first-child { .make-xs-column(12); }
+        > span:last-child { .make-xs-column(12); font-size: 85%; }
+    }
+}
+
+@media(max-width: @screen-phone) {
+    .page-header h3, .page-header h4 {
+        padding-left: 10px;
+    }
+}
+
+.page-header {
+    margin-top: 0px !important;
+
+    > h3 {
+        margin-top: 0px !important;
+    }
+}

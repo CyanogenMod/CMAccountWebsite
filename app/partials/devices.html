@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-lg-8">
+    <h3 data-l10n-text="devices.my_devices">My Devices</h3>
+
+    <div class="device panel panel-default" data-ng-show="devices.length == 0">
+      <div class="panel-body" style="text-align: center">
+        You do not have any devices registered with your CyanogenMod Account.  Please login to your device using your CyanogenMod Account to register it.
+      </div>
+    </div>
+
+    <div class="device panel panel-default" data-ng-repeat="device in devices">
+      <div class="panel-heading">
+        <div data-ng-switch="device.nickname">
+          <h3 data-ng-switch-when="null" class="panel-title">{{ device.make }} {{ device.model }}</h3>
+          <h3 data-ng-switch-default class="panel-title">{{ device.nickname }}</h3>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div data-ng-show="device.multiple_users" class="alert alert-info">
+          <strong>Warning!</strong>  This device has been associated with multiple CyanogenMod Accounts.  Locate and Remote Wipe features will only work for the user that is currently logged in to this device.
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="col-lg-8 col-sm-8 col-xs-12">
+          <div class="device-detail">
+            <span data-l10n-text="devices.cyanogenmod_version">CyanogenMod Version</span>
+            <span>{{ device.cm_version }}</span>
+          </div>
+
+          <div class="device-detail">
+            <span data-l10n-text="devices.android_version">Android Version</span>
+            <span>{{ device.android_version }}</span>
+          </div>
+          
+          <div class="device-detail">
+            <span data-l10n-text="devices.last_seen">Last Seen</span>
+            <span>{{ device.last_seen | date:'short' }}</span>
+          </div>
+          
+          <div class="device-detail">
+            <span data-l10n-text="devices.date_registered">Date Registered</span>
+            <span>{{ device.registration_date | date:'short' }}</span>
+          </div>
+          
+          <div class="device-detail">
+            <span data-l10n-text="devices.carrier">Carrier</span>
+            <span>{{ device.carrier }}</span>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-4 col-12">
+          <a class="btn btn-default btn-block" data-ng-href="/device/{{ device.id }}/find"><i class="icon-map-marker"></i> {{ 'Locate' | l10n:'devices.locate' }}</a>
+          <a class="btn btn-warning btn-block" data-ng-href="/device/{{ device.id }}/wipe"><i class="icon-eraser"></i> {{ 'Remote Wipe' | l10n:'devices.remote_wipe' }}</a>
+          <a class="btn btn-danger btn-block" data-ng-href="/device/{{ device.id }}/remove"><i class="icon-remove"></i> {{ 'Remove Device' | l10n:'devices.remove_device' }}</a>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-lg-4 visible-lg">
+    <div class="idcard panel panel-default">
+      <div class="panel-body">
+        <a href="http://www.gravatar.com/" target="_blank"><img style="width: 70px; height: 70px;" data-ng-src="https://www.gravatar.com/avatar/{{ md5(profile.email) }}?s=140" data-bs-tooltip data-tooltip="" title="Change your avatar at gravatar.com" alt="Change your avatar at gravatar.com"></a>
+        <div class="idcard-content">
+          <h3>{{ profile.email }}</h3>
+          <dl class="dl-horizontal">
+            <dt><i class="icon-time"></i></dt>
+            <dd>{{ profile.date_created | date:'longDate' }}</dd>
+
+            <dt><i class="icon-off"></i></dt>
+            <dd><a style="cursor: pointer" data-ng-click="logout()" data-l10n-text="logout">Log Out</a></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

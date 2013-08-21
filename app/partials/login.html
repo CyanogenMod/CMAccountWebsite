@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="page-header">
+      <h3 data-l10n-text="login.title">Sign in to your CyanogenMod Account</h3>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-8">
+    <div class="alert alert-danger" data-ng-show="authenticationError">
+      <strong>The email address or password you entered is incorrect.</strong>
+    </div>
+    
+    <form name="form" class="form-horizontal well" data-novalidate>
+      <!-- begin email -->
+      <div class="form-group" data-ng-class="{'has-error': form.email.$dirty && form.email.$invalid}">
+        <label for="email" class="col-lg-2 control-label" data-l10n-text="email">Email</label>
+        <div class="col-lg-5">
+          <input class="form-control" type="email" name="email" data-ng-model="model.email" placeholder="Email" data-required>
+        </div>
+        <span class="help-block" data-ng-show="form.email.$dirty && form.email.$invalid">Please enter a valid email address.</span>
+      </div>
+      <!-- end email -->
+
+      <!-- begin password -->
+      <div class="form-group" data-ng-class="{'has-error': form.password.$dirty && form.password.$invalid}">
+        <label for="password" class="col-lg-2 control-label" data-l10n-text="password">Password</label>
+        <div class="col-lg-5">
+          <input class="form-control" type="password" name="password" data-ng-model="model.password" placeholder="Password" data-required>
+        </div>
+      </div>
+      <!-- end password -->
+
+      <div class="form-group">
+        <div class="col-lg-5 col-lg-offset-2">
+          <p><a href="/account/password_reset" data-l10n-text="login.reset_password">Reset Your Password</a></p>
+          <p><span data-l10n-text="login.no_account">No account?</span> <a href="/register" data-l10n-text="register.register">Register</a></p>
+        </div>
+      </div>
+
+      <!-- form actions -->
+      <div class="form-group">
+        <div class="col-lg-5 col-lg-offset-2">
+          <button data-ng-click="signin()" data-ng-disabled="form.$invalid || polling" class="btn btn-primary"><i class="icon-ok"></i> Sign In</button>
+        </div>
+      </div>
+      <!-- end actions -->
+    </form>
+  </div>
+  <div class="col-lg-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title" data-l10n-text="learn_more.what_is_cmaccount.title">What is a CyanogenMod Account?</h3>
+      </div>
+      <div class="panel-body">
+        <p data-l10n-text="what_is_cmaccount.text">A CyanogenMod Account provides access to value-add services and functionality for your mobile device running CyanogenMod.</p>
+        <p><a href="/help" data-l10n-text="learn_more.learn_more">Learn More</a></p>
+      </div>
+    </div>
+  </div>
+</div>
