@@ -9,7 +9,7 @@
       email: "E-mail",
       password: "Mot de passe",
       confirm_password: "Confirmer le mot de passe",
-      logout: "Déconnecter",
+      logout: "Déconnexion",
       continue: "Continuer",
       cancel: "Annuler",
       privacy_policy: "Politique de confidentialité",
@@ -36,7 +36,7 @@
         title: "Connexion à votre compte CyanogenMod",
         signin: "Connexion",
         reset_password: "Réinitialiser votre mot de passe",
-        no_account: "Pas de compte ?",
+        no_account: "Pas encore de compte ?",
       },
 
       // Password Reset Partial
@@ -48,7 +48,7 @@
       // Email Verification Partial
       verify_email: {
         title: "Vérification de votre adresse e-mail",
-        must_verify: "Vous devez vérifier votre adresse e-mail avant de pouvoir utiliser votre compte CyanogenMod. Lors de votre inscription, nous vous avons transmis un e-mail avec un lien à suivre.",
+        must_verify: "Vous devez valider votre adresse e-mail avant de pouvoir utiliser un compte CyanogenMod. Suite à votre inscription, nous vous avons transmis un e-mail avec un lien à suivre.",
         no_longer_valid: "Le lien que vous avez utilisé n'est plus valide.",
       },
 
@@ -63,7 +63,7 @@
 
         do_i_need: {
           title: "Ai-je besoin d'un compte CyanogenMod ?",
-          text: "La création d'un compte CyanogenMod n'est pas requis pour utiliser votre appareil sous CyanogenMod. Certaines fonctionnalités ou services fournis par CyanogenMod, comme \"Trouver mon smartphone\" nécessite un compte CyanogenMod.",
+          text: "La création d'un compte CyanogenMod est facultative et n'est pas requise pour utiliser votre appareil fonctionnant sous CyanogenMod. Certaines fonctionnalités ou services fournis par CyanogenMod, comme \"Localisation de l'appareil\", nécessitent néanmoins un compte CyanogenMod.",
         },
 
         personal_info: {
@@ -71,13 +71,13 @@
           required: "La création d'un compte CyanogenMod nécessite des informations basiques comme l'adresse e-mail.",
           // Note: This string ends with a link to "Privacy Policy"
           // TODO(ctso): Implement a way to safely embed html in the translations.
-          usage: "CyanogenMod ne vendra jamais vos informations personnelles. Ces informations seront seulement utilisées en accord avec notre", //Politique de confidentialité
+          usage: "CyanogenMod ne revendra jamais vos informations personnelles. Ces informations seront seulement utilisées en accord avec notre", //Politique de confidentialité
         },
 
         secure: {
           title: "Est-ce sécurisé ?",
-          communication: "Toutes les communications de votre navigateur ou votre appareil vers nos serveurs ont un cryptage de type SSH. De plus, nous ne vous enverrons jamais votre mot de passe en clair depuis nos serveurs.",
-          priority: "Étant donné la nature des fonctionnalités de \"Localisation de l'appareil\" et de l'\"Effacement à distance\", la sécurité est notre priorité numéro un. Vous ne pouvez pas localiser ou effacer un appareil sans vous êtes préalablement authentifié avec votre mot de passe. Toutes les communications avec votre appareil, informations de localisation incluses, sont cryptées et inaccessibles pour aucun des serveurs CyanogenMod, personnels ou partenaires.",
+          communication: "Toutes les communications de votre navigateur ou votre appareil vers nos serveurs subissent un cryptage de type SSH. De plus, nous ne vous enverrons jamais votre mot de passe en clair depuis nos serveurs.",
+          priority: "Étant donné la nature des fonctionnalités de \"Localisation de l'appareil\" et de l'\"Effacement à distance\", la sécurité est notre priorité numéro un. Il est impossible de localiser ou d'effacer un appareil sans être préalablement authentifié avec votre mot de passe. Toutes les communications avec votre appareil, informations de localisation incluses, sont cryptées et inaccessibles par aucun des serveurs CyanogenMod, personnels ou partenaires.",
         },
 
         benefits: {
@@ -107,19 +107,19 @@
       secure_message: {
         locate_device: "Localiser l'appareil",
         authentication_failure: "Authentification échouée !",
-        invalid_password: "Le mot de passe entré est invalide ou votre session a expiré",
+        invalid_password: "Le mot de passe entré est invalide ou votre session a expiré.",
 
         enter_password: "Entrez votre mot de passe pour vous authentifier avec votre appareil.",
         wait_secure_channel: "Patientez pendant l'ouverture d'une connexion sécurisée avec votre appareil.",
         wait_locate: "Patientez pendant la localisation de votre appareil.",
         wait_wipe: "Patientez pendant l'effacement de votre appareil.",
-        wipe_started: "Effacement démarré avec succès.",
+        wipe_started: "Effacement initié avec succès.",
       },
 
       // Remove Device Partial
       remove_device: {
         problem: "Un problème a été rencontré pendant la suppression de l'appareil de votre compte.",
-        confirm: "Voulez-vous supprimer cet appareil ?",
+        confirm: "Voulez-vous vraiment supprimer cet appareil ?",
         warning_message: "Si vous supprimez cet appareil de votre compte CyanogenMod, vous ne serez plus en mesure d'utiliser les fonctionnalités telles que la localisation ou l'effacement à distance de votre appareil.",
       },
     });
