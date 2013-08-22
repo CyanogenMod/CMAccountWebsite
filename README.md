@@ -21,7 +21,7 @@ npm install
 You can start a development server using Grunt.  This allows you to make changes and test them against the CyanogenMod Account server.
 
 ```shell
-grunt devserver
+grunt server
 ```
 
 Once the development server is running, it can be accessed at [http://localhost:8080/](http://localhost:8080).

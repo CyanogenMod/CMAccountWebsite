@@ -20,14 +20,37 @@ module.exports = function(grunt) {
         'app/**/*.html'
       ]}
     },
-
+    
     connect: {
       rules: {
         '^/bower_components/(.*)$': '/bower_components/$1',
         '^/static/(.*)$': '/app/$1',
         '^/.*$': '/app/index.html'
       },
-      dev: {
+      local: {
+        options: {
+          port: 8181,
+          middleware: function(connect) {
+            return [
+              proxySnippet,
+              rewriteRulesSnippet,
+              lrSnippet,
+              mountFolder(connect, '.')
+            ];
+          }
+        },
+        proxies: [{
+          context: '/api',
+          host: 'localhost',
+          port: 8080
+        },
+        {
+          context: '/_ah',
+          host: 'localhost',
+          port: 8080
+        }]
+      },
+      remote: {
         options: {
           port: 8080,
           middleware: function(connect) {
@@ -55,10 +78,17 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('devserver', [
-    'configureProxies:dev',
+  grunt.registerTask('server', [
+    'configureProxies:remote',
     'configureRewriteRules',
-    'connect:dev',
+    'connect:remote',
+    'watch:dev'
+  ]);
+
+  grunt.registerTask('devserver', [
+    'configureProxies:local',
+    'configureRewriteRules',
+    'connect:local',
     'watch:dev'
   ]);
 };
