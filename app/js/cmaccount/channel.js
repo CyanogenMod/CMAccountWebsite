@@ -1,4 +1,4 @@
-var channelModule = angular.module('cmid.channel', []);
+var channelModule = angular.module('cmaccount.channel', []);
 channelModule.service('ChannelService', function($q, $http, $rootScope, $timeout, API_BASE) {
   // Private members
   var dfd = null;

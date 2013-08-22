@@ -115,7 +115,7 @@
 
   }
 
-  angular.module('cmid.maps', []).directive('googleMap', [function() {
+  angular.module('cmaccount.maps', []).directive('googleMap', [function() {
     return {
       restrict: 'AE',
       template: '<div></div>',

@@ -1,6 +1,6 @@
-var cmidModule = angular.module('cmid', ['ngRoute', 'cmid.api', 'cmid.channel', 'cmid.maps', 'cmid.directives', 'angulartics', 'angulartics.ga', 'l10n', 'cmaccount.l10n.en-us']);
+var cmaccountModule = angular.module('cmaccount', ['ngRoute', 'cmaccount.api', 'cmaccount.channel', 'cmaccount.maps', 'cmaccount.directives', 'angulartics', 'angulartics.ga', 'l10n', 'cmaccount.l10n.en-us']);
 
-cmidModule.config(function($routeProvider, $locationProvider, $httpProvider, $injector) {
+cmaccountModule.config(function($routeProvider, $locationProvider, $httpProvider, $injector) {
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'CMID Website';
 
   // Intercept http requests and responses, so we can show the loading widget.
@@ -77,40 +77,40 @@ cmidModule.config(function($routeProvider, $locationProvider, $httpProvider, $in
   $routeProvider
     .when('/register', {
       templateUrl: '/static/partials/register.html',
-      controller: cmid.RegisterController,
+      controller: CMAccount.RegisterController,
     })
     .when('/login', {
       templateUrl: '/static/partials/login.html',
-      controller: cmid.LoginController,
+      controller: CMAccount.LoginController,
     })
     .when('/devices', {
       templateUrl: '/static/partials/devices.html',
-      controller: cmid.DevicesController,
-      resolve: cmid.DevicesController.resolve
+      controller: CMAccount.DevicesController,
+      resolve: CMAccount.DevicesController.resolve
     })
     .when('/device/:device_id/find', {
       templateUrl: '/static/partials/device/find.html',
-      controller: cmid.DeviceFindController,
+      controller: CMAccount.DeviceFindController,
     })
     .when('/device/:device_id/wipe', {
       templateUrl: '/static/partials/device/wipe.html',
-      controller: cmid.DeviceWipeController,
+      controller: CMAccount.DeviceWipeController,
     })
     .when('/device/:device_id/remove', {
       templateUrl: '/static/partials/device/remove.html',
-      controller: cmid.DeviceRemoveController,
+      controller: CMAccount.DeviceRemoveController,
     })
     .when('/account', {
       templateUrl: '/static/partials/account.html',
-      controller: cmid.AccountController,
+      controller: CMAccount.AccountController,
     })
     .when('/account/password_reset', {
       templateUrl: '/static/partials/account/password_reset.html',
-      controller: cmid.AccountPasswordResetController,
+      controller: CMAccount.AccountPasswordResetController,
     })
     .when('/account/verify_email', {
       templateUrl: '/static/partials/account/verify_email.html',
-      controller: cmid.AccountVerifyEmailController,
+      controller: CMAccount.AccountVerifyEmailController,
     })
     .when('/help', {
       templateUrl: '/static/partials/help.html',
@@ -118,7 +118,7 @@ cmidModule.config(function($routeProvider, $locationProvider, $httpProvider, $in
     .otherwise({ redirectTo: '/devices' });
 });
 
-cmidModule.run(function($rootScope, $route, $location, AuthService, API_BASE) {
+cmaccountModule.run(function($rootScope, $route, $location, AuthService, API_BASE) {
   $rootScope.logout = function() {
     AuthService.logout(function(response) {
       $rootScope.authenticated = false;

@@ -1,4 +1,4 @@
-var cmid = window.cmid || {};
+var CMAccount = window.CMAccount || {};
 
 // Controllers
 var RegisterController = function($rootScope, $scope, $location, Account) {
@@ -311,7 +311,7 @@ var AccountController = function($scope, Account, AuthService, TokenService) {
   };
 };
 
-_.extend(cmid, {
+_.extend(CMAccount, {
   RegisterController: RegisterController,
   LoginController: LoginController,
   DevicesController: DevicesController,

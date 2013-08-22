@@ -1,7 +1,7 @@
-window.cmid = {};
+window.CMAccount = {};
 
 (function(_) {
-  var cmid = window.cmid || {};
+  var CMAccount = window.CMAccount || {};
 
   function Storage() {
     this.supported = false;
@@ -60,7 +60,7 @@ window.cmid = {};
     };
   }
 
-  _.extend(cmid, {
+  _.extend(CMAccount, {
     Storage: new Storage()
   });
 

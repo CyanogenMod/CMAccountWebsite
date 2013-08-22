@@ -1,5 +1,3 @@
-var cmid = window.cmid || {};
-
 // Extend JSEncrypt
 // Instead of base64 encoding the entire public key, just strip
 // the headers.  It is already base64 encoded.

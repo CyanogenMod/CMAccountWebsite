@@ -1,4 +1,4 @@
-var apiModule = angular.module('cmid.api', ['ngResource']);
+var apiModule = angular.module('cmaccount.api', ['ngResource']);
 // TODO: Use a provider instead of factories, so we can configure it.
 apiModule.constant('API_BASE', '/api/v1');
 

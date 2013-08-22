@@ -1,4 +1,4 @@
-var directivesModule = angular.module('cmid.directives', []);
+var directivesModule = angular.module('cmaccount.directives', []);
 
 directivesModule.directive('match', function() {
   return {
