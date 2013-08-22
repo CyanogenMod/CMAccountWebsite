@@ -223,16 +223,20 @@ channelModule.service('SecureMessageService', function($q, $http, $rootScope, $a
   // Public
   this.openChannel = ChannelService.open;
 
-  this.sendPublicKey = function(deviceKey, password) {
+  this.sendPublicKey = function(deviceKey, password, deviceSalt) {
     // Clear the aesKey
     self.aesKey = null;
 
     // Hash the password
     self.hashedPassword = Util.sha512(password);
 
-    // Hash the public key
+    // Derive the HMAC secret from the hashed password and device salt using PBKDF2.
+    deviceSalt = CryptoJS.enc.Base64.parse(deviceSalt);
+    var hmacSecret = CryptoJS.enc.Base64.stringify(CryptoJS.PBKDF2(self.hashedPassword, deviceSalt, { iterations: 1024 }));
+
+    // Generate a signature for the public key using HMAC-SHA512.
     var publicKey = Util.rsa.getPublicKeyData();
-    var publicKeySignature = CryptoJS.HmacSHA512(publicKey, self.hashedPassword);
+    var publicKeySignature = CryptoJS.HmacSHA512(publicKey, hmacSecret);
 
     // Create the key exchange message
     var message = {

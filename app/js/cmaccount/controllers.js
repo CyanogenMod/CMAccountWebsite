@@ -141,7 +141,7 @@ var DeviceFindController = function($scope, $routeParams, $http, $timeout, $anal
   $scope.authenticate = function() {
     $scope.havePassword = true;
     SecureMessageService.openChannel().then(function() {
-      SecureMessageService.sendPublicKey(deviceKey, $scope.plaintextPassword);
+      SecureMessageService.sendPublicKey(deviceKey, $scope.plaintextPassword, $scope.device.salt);
       waitForEncryptionKey();
     });
   };
@@ -213,7 +213,7 @@ var DeviceWipeController = function($scope, $routeParams, $http, $timeout, API_B
   $scope.authenticate = function() {
     $scope.havePassword = true;
     SecureMessageService.openChannel().then(function() {
-      SecureMessageService.sendPublicKey(deviceKey, $scope.plaintextPassword);
+      SecureMessageService.sendPublicKey(deviceKey, $scope.plaintextPassword, $scope.device.salt);
       waitForEncryptionKey();
     });
   };
