@@ -198,7 +198,7 @@ var DeviceFindController = function($scope, $routeParams, $http, $timeout, $anal
   });
 };
 
-var DeviceWipeController = function($scope, $routeParams, $http, $timeout, API_BASE, Device, SecureMessageService) {
+var DeviceWipeController = function($scope, $routeParams, $http, $timeout, $analytics, API_BASE, Device, SecureMessageService) {
   // Setup scope variables
   var deviceKey = $routeParams.device_id;
   $scope.device = Device.get({'id': deviceKey});
