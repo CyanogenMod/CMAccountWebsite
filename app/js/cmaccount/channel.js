@@ -65,6 +65,7 @@ channelModule.service('SecureMessageService', function($q, $http, $rootScope, $a
   this.aesKey = null;
   this.dfd = null;
   this.hashedPassword = null;
+  this.hmacSecret = null;
   
   this.sessionId = null;
   this.remoteSequence = 0;
@@ -140,8 +141,8 @@ channelModule.service('SecureMessageService', function($q, $http, $rootScope, $a
     // Decrypt AES key
     var _aesKey = Util.rsa.decrypt(message.symmetric_key);
 
-    // Verify symmetric key by hashing it with our password
-    var keyVerification = Util.sha512(_aesKey + self.hashedPassword);
+    // Derive the HMAC secret from the hashed password and device salt using PBKDF2.
+    var keyVerification = CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA512(_aesKey, self.hmacSecret));
     if (keyVerification != message.symmetric_key_verification) {
       logging.error("SecureMessageService: Unable to verify symmetric key");
       resetEncryption();
@@ -232,11 +233,11 @@ channelModule.service('SecureMessageService', function($q, $http, $rootScope, $a
 
     // Derive the HMAC secret from the hashed password and device salt using PBKDF2.
     deviceSalt = CryptoJS.enc.Base64.parse(deviceSalt);
-    var hmacSecret = CryptoJS.enc.Base64.stringify(CryptoJS.PBKDF2(self.hashedPassword, deviceSalt, { iterations: 1024 }));
+    self.hmacSecret = CryptoJS.enc.Base64.stringify(CryptoJS.PBKDF2(self.hashedPassword, deviceSalt, { iterations: 1024 }));
 
     // Generate a signature for the public key using HMAC-SHA512.
     var publicKey = Util.rsa.getPublicKeyData();
-    var publicKeySignature = CryptoJS.HmacSHA512(publicKey, hmacSecret);
+    var publicKeySignature = CryptoJS.HmacSHA512(publicKey, self.hmacSecret);
 
     // Create the key exchange message
     var message = {
