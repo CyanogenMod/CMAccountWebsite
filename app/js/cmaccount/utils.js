@@ -1,14 +1,3 @@
-// Extend JSEncrypt
-// Instead of base64 encoding the entire public key, just strip
-// the headers.  It is already base64 encoded.
-JSEncrypt.prototype.getPublicKeyData = function() {
-  var publicKey = this.getPublicKey();
-  publicKey = publicKey.replace("-----BEGIN PUBLIC KEY-----\n", "");
-  publicKey = publicKey.replace("-----END PUBLIC KEY-----", "");
-  publicKey = publicKey.replace(/(\n)/g, "");
-  return publicKey;
-};
-
 // Monkey patch CryptoJS to securely generate random WordArrays
 CryptoJS.lib.WordArray.random = function(nBytes) {
   if (window.crypto && window.crypto.getRandomValues) {
@@ -30,42 +19,35 @@ CryptoJS.lib.WordArray.random = function(nBytes) {
   }
 };
 
-var Util = (function(exports, _, JSEncrypt, CryptoJS) {
-  // Setup RSA (JSEncrypt)
-  var _jsEncrypt = new JSEncrypt();
-  var _rsa = {
-    getPublicKeyData: function() {
-      return _jsEncrypt.getPublicKeyData();
-    },
-    encrypt: function(message) {
-      return _jsEncrypt.encrypt(message);
-    },
-    decrypt: function(message) {
-      return _jsEncrypt.decrypt(message);
-    }
-  };
-
+var Util = (function(exports, _, CryptoJS) {
   // CryptoJS AES helpers
   var _aes = {
     encrypt: function(plaintext, key) {
-      key = CryptoJS.enc.Base64.parse(key);
+      key = CryptoJS.enc.Hex.parse(key);
 
       // Generate a random iv
       var iv = CryptoJS.lib.WordArray.random(16);
 
       var encrypted = CryptoJS.AES.encrypt(plaintext, key, { iv: iv });
-      return {
-        initializationVector: CryptoJS.enc.Base64.stringify(iv),
-        ciphertext: encrypted.toString()
-      };
+      return encrypted.iv + encrypted.ciphertext;
     },
 
-    decrypt: function(ciphertext, key, iv) {
-      key = CryptoJS.enc.Base64.parse(key);
-      iv = CryptoJS.enc.Base64.parse(iv);
-      ciphertext = CryptoJS.enc.Base64.parse(ciphertext);
+    decrypt: function(encrypted, key) {
+      key = CryptoJS.enc.Hex.parse(key);
+      // Slice to get iv and ciphertext
+      encrypted = Util.hexToBytes(encrypted);
+      var iv = encrypted.slice(0,16);
+      var ciphertext = encrypted.slice(16, encrypted.length);
 
-      var decrypted = CryptoJS.AES.decrypt({ ciphertext: ciphertext, key: key, iv: iv }, key, { iv: iv });
+      window.encrypted = encrypted;
+      window.iv = iv;
+      window.ciphertext = ciphertext;
+
+      // Encode them to a format CryptoJS can understand
+      iv = CryptoJS.enc.Hex.parse(Util.bytesToHex(iv));
+      ciphertext = CryptoJS.enc.Hex.parse(Util.bytesToHex(ciphertext));
+
+      var decrypted = CryptoJS.AES.decrypt({ ciphertext: ciphertext, iv: iv, key: key }, key, { iv: iv });
       return decrypted.toString(CryptoJS.enc.Utf8);
     }
   };
@@ -86,8 +68,24 @@ var Util = (function(exports, _, JSEncrypt, CryptoJS) {
     return exports.sha512(exports.sha512(s));
   };
 
-  exports.rsa = _rsa;
   exports.aes = _aes;
+  exports.ecdh = new ECDH("secp256r1");
+  exports.bytesToHex = function(bytes) {
+    var hexDigits = "0123456789abcdef";
+    var result = "";
+    for (var i = 0; i < bytes.length; i++) {
+      var b = bytes[i] & 0xFF;
+      result += hexDigits[b >> 4] + hexDigits[b & 15];
+    }
+    return result;
+  };
+  exports.hexToBytes = function(hex) {
+    var bytes = [];
+    for (var i = 0; i < hex.length; i += 2) {
+      bytes.push(parseInt("0x" + hex.substr(i, 2), 16));
+    }
+    return bytes;
+  };
 
   exports.matchError = function(errors, code) {
     if (_.findWhere(errors, {code: code})) {
@@ -99,4 +97,4 @@ var Util = (function(exports, _, JSEncrypt, CryptoJS) {
 
   return exports;
 
-})(window.Util || {}, _, JSEncrypt, CryptoJS);
+})(window.Util || {}, _, CryptoJS);

@@ -8,13 +8,13 @@
 
 <div class="row">
   <div class="col-lg-9">
-    <div class="alert alert-warning" data-ng-show="encryptionKeyTimeout && !haveEncryptionKey">
+    <div class="alert alert-warning" data-ng-show="!haveLocation && locationTimeout">
       We are still attempting to establish a secure connection to your device.  Your device may not have an active Internet connection, or may be powered off.  You can continue to wait, or <a class="alert-link" href="javascript:location.reload()">refresh the page</a> to retry. 
     </div>
 
     <!-- password prompt -->
-    <div data-ng-show="!haveLocation && !havePassword && !haveEncryptionKey" style="text-align: center">
-      <div class="alert alert-danger" data-ng-show="authenticationFailure">
+    <div data-ng-show="!haveLocation && !havePassword" style="text-align: center">
+      <div class="alert alert-danger" data-ng-show="keyExchangeFailure">
         <strong data-l10n-text="secure_message.authentication_failure">Authentication Failure!</strong>  <span data-l10n-text="secure_message.invalid_password">The password you entered was invalid or your session has expired.</span>
       </div>
       <h3 data-l10n-text="secure_message.enter_password">Please enter your password to authenticate with your device.</h3>
@@ -29,12 +29,7 @@
       </form>
     </div>
 
-    <div data-ng-show="!haveLocation && havePassword && !haveEncryptionKey" style="text-align: center">
-      <p><i class="icon-refresh icon-spin icon-4x"></i></p>
-      <h3 data-l10n-text="secure_message.wait_secure_channel">Please wait while we open a secure channel to your device.</h3>
-    </div>
-
-    <div data-ng-show="!haveLocation && havePassword && haveEncryptionKey" style="text-align: center">
+    <div data-ng-show="!haveLocation && havePassword" style="text-align: center">
       <p><i class="icon-refresh icon-spin icon-4x"></i></p>
       <h3 data-l10n-text="secure_message.wait_locate">Please wait while we attempt to locate your device.</h3>
     </div>
