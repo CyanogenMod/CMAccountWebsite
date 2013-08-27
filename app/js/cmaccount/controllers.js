@@ -133,17 +133,29 @@ var DeviceFindController = function($scope, $routeParams, $http, $timeout, $anal
 
   // Reset the view
   $scope.haveLocation = false;
-  $scope.haveEncryptionKey = false;
   $scope.havePassword = false;
-  $scope.encryptionKeyTimeout = false;
+  $scope.locationTimeout = false;
 
   // Hook up the authenticate method to the scope
   $scope.authenticate = function() {
     $scope.havePassword = true;
     SecureMessageService.openChannel().then(function() {
-      SecureMessageService.sendPublicKey(deviceKey, $scope.plaintextPassword, $scope.device.salt);
-      waitForEncryptionKey();
+      var hashedPassword = Util.sha512($scope.plaintextPassword);
+      SecureMessageService.ready().then(function() {
+      }, function() {
+        // Error callback, key exchange failure.
+        $scope.plaintextPassword = undefined;
+        $scope.haveLocation = false;
+        $scope.havePassword = false;
+        $scope.keyExchangeFailure = true;
+        $scope.locationTimeout = false;
+      });
+      SecureMessageService.sendGCM(deviceKey, hashedPassword, $scope.device.salt, {command: 'begin_locate'});
     });
+    $timeout(function() {
+      $analytics.eventTrack('locateTimeout', { category: 'device' });
+      $scope.locationTimeout = true;
+    }, 30000);
   };
 
   var reportSuccessfulLocate = _.once(function() {
@@ -151,32 +163,6 @@ var DeviceFindController = function($scope, $routeParams, $http, $timeout, $anal
       $analytics.eventTrack('locateSuccess', { category: 'device' });
     });
   });
-
-  var reportTimeout = function() {
-    $analytics.eventTrack('locateTimeout', { category: 'device' });
-  };
-
-  var waitForEncryptionKey = function() {
-      $timeout(function() {
-        reportTimeout();
-        $scope.encryptionKeyTimeout = true;
-      }, 60000);
-      SecureMessageService.ready().then(function() {
-        // We got the encryption key, send the GCM message
-        $scope.havePassword = true;
-        $scope.haveEncryptionKey = true;
-        $scope.encryptionKeyTimeout = false;
-        SecureMessageService.sendGCM(deviceKey, {command: 'begin_locate'});
-      }, function() {
-        // Something went wrong.  Most likely the password was entered incorrectly.
-        $scope.plaintextPassword = undefined;
-        $scope.authenticationFailure = true;
-        $scope.haveLocation = false;
-        $scope.havePassword = false;
-        $scope.haveEncryptionKey = false;
-        $scope.encryptionKeyTimeout = false;
-      });
-  };
 
   $scope.$on('secure_message:device_location', function(command, message) {
     // Report a successful locate to Google Analytics.  This does not send an personal information, just that it was successful.
@@ -189,6 +175,7 @@ var DeviceFindController = function($scope, $routeParams, $http, $timeout, $anal
     $scope.device = message.device;
 
     $scope.$apply(function() {
+      $scope.locationTimeout = false;
       $scope.haveLocation = true;
     });
     $scope.map.redraw();
@@ -205,17 +192,30 @@ var DeviceWipeController = function($scope, $routeParams, $http, $timeout, $anal
 
   // Reset the view
   $scope.wipeStarted = false;
-  $scope.haveEncryptionKey = false;
   $scope.havePassword = false;
-  $scope.encryptionKeyTimeout = false;
+  $scope.wipeTimeout = false;
+  $scope.keyExchangeFailure = false;
 
   // Hook up the authenticate method to the scope
   $scope.authenticate = function() {
     $scope.havePassword = true;
     SecureMessageService.openChannel().then(function() {
-      SecureMessageService.sendPublicKey(deviceKey, $scope.plaintextPassword, $scope.device.salt);
-      waitForEncryptionKey();
+      var hashedPassword = Util.sha512($scope.plaintextPassword);
+      SecureMessageService.ready().then(function() {
+      }, function() {
+        // Error callback, key exchange failure.
+        $scope.plaintextPassword = undefined;
+        $scope.wipeStarted = false;
+        $scope.havePassword = false;
+        $scope.keyExchangeFailure = true;
+        $scope.wipeTimeout = false;
+      });
+      SecureMessageService.sendGCM(deviceKey, hashedPassword, $scope.device.salt, {command: 'begin_wipe'});
     });
+    $timeout(function() {
+      $scope.wipeTimeout = true;
+      $analytics.eventTrack('wipeTimeout', { category: 'device' });
+    }, 30000);
   };
 
   var reportSuccessfulWipe= _.once(function() {
@@ -223,32 +223,6 @@ var DeviceWipeController = function($scope, $routeParams, $http, $timeout, $anal
       $analytics.eventTrack('wipeSuccess', { category: 'device' });
     });
   });
-
-  var reportTimeout = function() {
-    $analytics.eventTrack('wipeTimeout', { category: 'device' });
-  };
-
-  var waitForEncryptionKey = function() {
-      $timeout(function() {
-        $scope.encryptionKeyTimeout = true;
-        reportTimeout();
-      }, 60000);
-      SecureMessageService.ready().then(function() {
-        // We got the encryption key, send the GCM message
-        $scope.havePassword = true;
-        $scope.haveEncryptionKey = true;
-        $scope.encryptionKeyTimeout = false;
-        SecureMessageService.sendGCM(deviceKey, {command: 'begin_wipe'});
-      }, function() {
-        // Something went wrong.  Most likely the password was entered incorrectly.
-        $scope.plaintextPassword = undefined;
-        $scope.authenticationFailure = true;
-        $scope.wipeStarted = false;
-        $scope.havePassword = false;
-        $scope.haveEncryptionKey = false;
-        $scope.encryptionKeyTimeout = false;
-      });
-  };
 
   $scope.$on('secure_message:wipe_started', function(command, message) {
     // Report the wipe as successful to Google Analytics.  This does not send any personal information.

@@ -1,5 +1,5 @@
 var channelModule = angular.module('cmaccount.channel', []);
-channelModule.service('ChannelService', function($q, $http, $rootScope, $timeout, API_BASE) {
+channelModule.service('ChannelService', function($q, $http, $rootScope, $timeout, $analytics, API_BASE) {
   // Private members
   var dfd = null;
   var token = null;
@@ -61,22 +61,16 @@ channelModule.service('ChannelService', function($q, $http, $rootScope, $timeout
 });
 
 channelModule.service('SecureMessageService', function($q, $http, $rootScope, $analytics, ChannelService, API_BASE) {
-  var self = this;
   this.aesKey = null;
-  this.dfd = null;
-  this.hashedPassword = null;
-  this.hmacSecret = null;
-  
-  this.sessionId = null;
+  this.keyId = null;
   this.remoteSequence = 0;
   this.localSequence = 0;
+  this.dfd = null;
+  this.hmacSecret = null;
+  var self = this;
 
   var canDecrypt = function() {
     return (self.aesKey);
-  };
-
-  var canExchangeKeys = function() {
-    return (self.hashedPassword);
   };
 
   var validateSequence = function(newSequence) {
@@ -90,84 +84,39 @@ channelModule.service('SecureMessageService', function($q, $http, $rootScope, $a
     }
   };
 
-  var validateSession = function(sessionId) {
-    if (self.sessionId != sessionId) {
+  var validateSession = function(keyId) {
+    if (self.keyId != keyId) {
       $analytics.eventTrack('invalidSession', { category: 'secmsg' });
-      logging.warn("SecureMessageService: Session", sessionId, "is invalid");
+      logging.warn("SecureMessageService: keyId", keyId, "is invalid");
       return false;
     } else {
       return true;
     }
   };
 
-  var setSessionId = function(sessionId) {
+  var setKeyId = function(keyId) {
     resetSession();
-    self.sessionId = sessionId;
+    self.keyId = keyId;
   };
 
   var resetSession = function() {
-    self.sessionId = null;
+    self.keyId = null;
     self.remoteSequence = 0;
     self.localSequence = 0;
   };
 
   var resetEncryption = function() {
     self.aesKey = null;
-    self.hashedPassword = null;
-
-    $rootScope.$apply(function() {
-      self.dfd.reject();
-    });
+    self.hmacSecret =  null;
   };
- 
-  // Subscribe to key_exchange messages
-  ChannelService.on('key_exchange', function(command, message) {
-    // If we are not ready for key exchange, drop the message.
-    if (!canExchangeKeys()) {
-      logging.warn("SecureMessageService: Can't exchange keys yet, dropping message.");
-      return;
-    }
-
-    // Hang on to the message details
-    var messageDetails = {
-      device: message.device,
-      session_id: message.session_id,
-    };
-    message = message.message;
-
-    // Setup the session
-    setSessionId(messageDetails.session_id);
-
-    // Decrypt AES key
-    var _aesKey = Util.rsa.decrypt(message.symmetric_key);
-
-    // Derive the HMAC secret from the hashed password and device salt using PBKDF2.
-    var keyVerification = CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA512(_aesKey, self.hmacSecret));
-    if (keyVerification != message.symmetric_key_verification) {
-      logging.error("SecureMessageService: Unable to verify symmetric key");
-      resetEncryption();
-      return;
-    }
-
-    // If for some reason we already have the same key, don't resolve.
-    if ((self.aesKey == _aesKey) && (messageDetails.session_id == self.sessionId)) {
-      logging.warn("SecureMessageService: Already have this AES key and sessionId, skipping.");
-      return;
-    }
-
-    // Everything looks good, resolve deferred.
-    self.aesKey = _aesKey;
-    $rootScope.$apply(function() {
-      logging.debug("SecureMessageService: Ready!", self.aesKey);
-      self.dfd.resolve();
-    });
-  });
 
   // Subscribe to key_exchange_failed messages
   ChannelService.on('key_exchange_failed', function(command, message) {
     $analytics.eventTrack('keyExchangeFailed', { category: 'secmsg' });
     logging.warn("SecureMessageService: Got key exchange failed message, resetting.");
+    resetSession();
     resetEncryption();
+    $rootScope.$apply(function() { self.dfd.reject(); });
   });
 
   // Subscribe to secure_message messages
@@ -181,9 +130,17 @@ channelModule.service('SecureMessageService', function($q, $http, $rootScope, $a
     // Hang on to the message details
     var messageDetails = {
       device: message.device,
-      session_id: message.session_id
+      key_id: message.key_id,
     };
     message = message.message;
+
+    // Verify message signature
+    var signatureBody = message.ciphertext + ":" + message.initializationVector;
+    var signatureHex = CryptoJS.enc.Hex.stringify(CryptoJS.HmacSHA256(signatureBody, self.hmacSecret));
+    if (signatureHex != message.signature) {
+      logging.warn("SecureMessageService: Unable to verify message signature.");
+      return;
+    }
 
     // Decrypt the message using AES
     var decrypted = Util.aes.decrypt(message.ciphertext, self.aesKey, message.initializationVector);
@@ -206,7 +163,7 @@ channelModule.service('SecureMessageService', function($q, $http, $rootScope, $a
 
     if (decryptedMessage) {
       // Validate the session
-      if (!validateSession(messageDetails.session_id)) return;
+      if (!validateSession(messageDetails.key_id)) return;
       
       // Validate the sequence
       if (!validateSequence(decryptedMessage.params.sequence)) return;
@@ -221,60 +178,79 @@ channelModule.service('SecureMessageService', function($q, $http, $rootScope, $a
     }
   });
 
-  // Public
   this.openChannel = ChannelService.open;
-
-  this.sendPublicKey = function(deviceKey, password, deviceSalt) {
-    // Clear the aesKey
-    self.aesKey = null;
-
-    // Hash the password
-    self.hashedPassword = Util.sha512(password);
-
-    // Derive the HMAC secret from the hashed password and device salt using PBKDF2.
-    deviceSalt = CryptoJS.enc.Base64.parse(deviceSalt);
-    self.hmacSecret = CryptoJS.enc.Base64.stringify(CryptoJS.PBKDF2(self.hashedPassword, deviceSalt, { iterations: 1024 }));
-
-    // Generate a signature for the public key using HMAC-SHA512.
-    var publicKey = Util.rsa.getPublicKeyData();
-    var publicKeySignature = CryptoJS.HmacSHA512(publicKey, self.hmacSecret);
-
-    // Create the key exchange message
-    var message = {
-      'device_key': deviceKey,
-      'command': 'key_exchange',
-      'message': {
-        'public_key': publicKey,
-        'signature': CryptoJS.enc.Base64.stringify(publicKeySignature)
-      }
-    };
-
-    logging.debug("SecureMessageService: Sending public key to device");
-    $http.post(API_BASE + '/secmsg/send_gcm', message, {requireToken: true});
-  };
 
   this.ready = function() {
     self.dfd = $q.defer();
     return self.dfd.promise;
   };
 
-  this.sendGCM = function(deviceKey, plaintext) {
-    // Increase the sequence number.
-    self.localSequence += 1;
+  var getSymmetricKey = function(deviceKey) {
+    logging.debug("SecureMessageService: Asking server for public key");
+    var dfd = $q.defer();
 
-    // Add our sequence number.
-    plaintext.sequence = self.localSequence;
+    if (!self.aesKey) {
+      $http.get(API_BASE + "/device/get_public_key?device_key=" + deviceKey, {requireToken: true}).success(function(response) {
+        setKeyId(response.key_id);
+        response.x = Util.hexToBytes(response.x);
+        response.y = Util.hexToBytes(response.y);
+        var remotePublicKey = new ECPublicKey(response.x, response.y);
+        var keyBytes = Util.ecdh.getSecret(remotePublicKey).toByteArray();
+        // BigIntegers are stored in two's complement notation.  The first byte determines the sign.
+        // Because of this, there may be a signing byte, giving us a 264bit key, but  we need a 256bit key.
+        // If there is a signing byte, drop it.  Both sides must do this.
+        if (keyBytes.length == 33) {
+          keyBytes = keyBytes.slice(1, keyBytes.length);
+        }
+        self.aesKey = Util.bytesToHex(keyBytes);
+        dfd.resolve(self.aesKey);
+      }).error(function(error) {
+        dfd.reject(error);
+      });
+    } else {
+      dfd.resolve(self.aesKey);
+    }
 
-    // Encrypt the message.
-    var encrypted = Util.aes.encrypt(JSON.stringify(plaintext), self.aesKey);
-    var message = {
-      'command': 'secure_message',
-      'device_key': deviceKey,
-      'session_id': self.sessionId,
-      'message': encrypted
-    };
+    return dfd.promise;
+  };
 
-    logging.debug("SecureMessageService: Sending secure GCM", message);
-    $http.post(API_BASE + '/secmsg/send_gcm', message, {requireToken: true});
+  this.sendGCM = function(deviceKey, password, deviceSalt, plaintextMessage) {
+    deviceSalt = CryptoJS.enc.Base64.parse(deviceSalt);
+    getSymmetricKey(deviceKey).then(function(symmetricKey) {
+      self.localSequence += 1;
+      plaintextMessage.sequence = self.localSequence;
+
+      // Encrypt the plaintext message
+      var encrypted = Util.aes.encrypt(JSON.stringify(plaintextMessage), self.aesKey);
+      var message = {
+        command: 'secure_message',
+        device_key: deviceKey,
+        key_id: self.keyId,
+        message: encrypted
+      };
+
+      // If this is the first message we are sending, include our public key.
+      if (self.localSequence == 1) {
+        message.public_key = Util.ecdh.getPublic().toHexObject();
+      }
+
+      self.hmacSecret = CryptoJS.PBKDF2(password, deviceSalt, { keySize: 32/4, iterations: 1024 });
+      
+      // Sign public key
+      var publicKeySignatureBody = message.public_key.x + ':' + message.public_key.y;
+      var publicKeySignatureHex = CryptoJS.enc.Hex.stringify(CryptoJS.HmacSHA256(publicKeySignatureBody, self.hmacSecret));
+      message.public_key.signature = publicKeySignatureHex;
+
+      // Sign encrypted message
+      var encryptedMessageSignatureBody = encrypted.ciphertext + ':' + encrypted.initializationVector;
+      var encryptedMessageSignatureHex = CryptoJS.enc.Hex.stringify(CryptoJS.HmacSHA256(encryptedMessageSignatureBody, self.hmacSecret));
+      message.message.signature = encryptedMessageSignatureHex;
+
+      logging.debug("SecureMessageService: Sending secure GCM", message);
+      $http.post(API_BASE + '/secmsg/send_gcm', message, {requireToken: true});
+
+    }, function(error) {
+      logging.error("SecureMessageService: Error getting public key from server:", error);
+    });
   };
 });

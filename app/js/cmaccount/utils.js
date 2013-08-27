@@ -9,6 +9,14 @@ JSEncrypt.prototype.getPublicKeyData = function() {
   return publicKey;
 };
 
+// Monkey patch ECDH
+ECPublicKey.prototype.toHexObject = function() {
+  return {
+    x: Util.bytesToHex(this.getX().toByteArray()),
+    y: Util.bytesToHex(this.getY().toByteArray())
+  };
+};
+
 // Monkey patch CryptoJS to securely generate random WordArrays
 CryptoJS.lib.WordArray.random = function(nBytes) {
   if (window.crypto && window.crypto.getRandomValues) {
@@ -48,7 +56,7 @@ var Util = (function(exports, _, JSEncrypt, CryptoJS) {
   // CryptoJS AES helpers
   var _aes = {
     encrypt: function(plaintext, key) {
-      key = CryptoJS.enc.Base64.parse(key);
+      key = CryptoJS.enc.Hex.parse(key);
 
       // Generate a random iv
       var iv = CryptoJS.lib.WordArray.random(16);
@@ -61,7 +69,7 @@ var Util = (function(exports, _, JSEncrypt, CryptoJS) {
     },
 
     decrypt: function(ciphertext, key, iv) {
-      key = CryptoJS.enc.Base64.parse(key);
+      key = CryptoJS.enc.Hex.parse(key);
       iv = CryptoJS.enc.Base64.parse(iv);
       ciphertext = CryptoJS.enc.Base64.parse(ciphertext);
 
@@ -88,6 +96,23 @@ var Util = (function(exports, _, JSEncrypt, CryptoJS) {
 
   exports.rsa = _rsa;
   exports.aes = _aes;
+  exports.ecdh = new ECDH("secp256r1");
+  exports.bytesToHex = function(bytes) {
+    var hexDigits = "0123456789abcdef";
+    var result = "";
+    for (var i = 0; i < bytes.length; i++) {
+      var b = bytes[i] & 0xFF;
+      result += hexDigits[b >> 4] + hexDigits[b & 15];
+    }
+    return result;
+  };
+  exports.hexToBytes = function(hex) {
+    var bytes = [];
+    for (var i = 0; i < hex.length; i += 2) {
+      bytes.push(parseInt("0x" + hex.substr(i, 2), 16));
+    }
+    return bytes;
+  };
 
   exports.matchError = function(errors, code) {
     if (_.findWhere(errors, {code: code})) {
