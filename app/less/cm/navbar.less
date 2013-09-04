@@ -22,6 +22,10 @@
     }
 }
 
+.navbar ul.nav {
+    float: right !important;
+}
+
 .navbar .nav > li {
     border-bottom: 3px solid transparent;
 
@@ -41,6 +45,28 @@
         &:hover {
             color: @navbar-default-link-hover-color;
             background-color: @navbar-default-link-hover-bg;
+        }
+    }
+}
+
+/* Collapsed Style */
+@media (max-width: @grid-float-breakpoint) {
+    .navbar ul.nav {
+        float: left !important;
+    }
+
+    .navbar .nav > li {
+        border-bottom: none;
+        border-left: 3px solid transparent;
+
+        &.active,
+        &:hover {
+            border-left-color: @holo-blue;
+        }
+
+        a > {
+            padding-top: 7px;
+            padding-bottom: 7px;
         }
     }
 }
