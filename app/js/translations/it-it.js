@@ -3,12 +3,12 @@
 // TODO(ctso): Translate form validation errors.
 
 (function() {
-  angular.module('cmaccount.l10n.en-us', ['l10n']).config(['l10nProvider', function(l10n) {
+  angular.module('cmaccount.l10n.it-it', ['l10n']).config(['l10nProvider', function(l10n) {
     l10n.add('it-it', {
       // Generic
       email: "Email",
       password: "Password",
-      confirm_password: "Conferma Password",
+      confirm_password: "Conferma password",
       logout: "Log Out",
       continue: "Continua",
       cancel: "Cancella",
@@ -35,14 +35,14 @@
       login: {
         title: "Effettua il login al tuo Account CyanogenMod",
         signin: "Effettua il login",
-        reset_password: "Reimposta la tua Password",
+        reset_password: "Reimposta la tua password",
         no_account: "Nessun account?",
       },
 
       // Password Reset Partial
       password_reset: {
-        title: "Reimposta la Password del tuo Account CyanogenMod",
-        reset_password: "Reimposta Password",
+        title: "Reimposta la password del tuo Account CyanogenMod",
+        reset_password: "Reimposta password",
       },
 
       // Email Verification Partial
@@ -76,13 +76,13 @@
 
         secure: {
           title: "È sicuro?",
-          communication: "Tutte le comunicazioni tra il tuo browser o il tuo dispositivo e i nostri server sono criptate via SSL. In aggiunta, non invieremo mai la tua password in chiaro verso i nostri servers.",
-          priority: "Data la natura delle funzioni \"Trova il mio telefono\" e \"Cancellazione Remota\", la sicurezza è la nostra prima prioritá. Non puoi localizzare o cancellare da remoto il tuo dispositivo senza aver effettuato prima l'autenticazione usando la tua password. Tutte le comunicazioni con il tuo dispositivo, incluse le informazioni di localizzazione, sono cifrate e inaccessibili a qualsiasi server CyanogenMod, personale, o di partners.",
+          communication: "Tutte le comunicazioni tra il tuo browser o il tuo dispositivo e i nostri server sono criptate via SSL. In aggiunta, non invieremo mai la tua password in chiaro verso i nostri server.",
+          priority: "Data la natura delle funzioni \"Trova il mio telefono\" e \"Cancellazione remota\", la sicurezza è la nostra prima prioritá. Non puoi localizzare o cancellare da remoto il tuo dispositivo senza aver effettuato prima l'autenticazione usando la tua password. Tutte le comunicazioni con il tuo dispositivo, incluse le informazioni di localizzazione, sono cifrate e inaccessibili a qualsiasi server CyanogenMod, personale, o di partners.",
         },
 
         benefits: {
           title: "Cosa comporta avere un account?",
-          text: "Creando un account CyanogenMod, avrai a disposizione, come minimo, l'accesso alle funzionalitá \"Trova il mio telefono\" e \"Cancellazione Remota\" per il tuo dispositivo.",
+          text: "Creando un account CyanogenMod, avrai a disposizione, come minimo, l'accesso alle funzionalitá \"Trova il mio telefono\" e \"Cancellazione remota\" per il tuo dispositivo.",
         },
       },
 
@@ -93,20 +93,20 @@
         cyanogenmod_version: "Versione CyanogenMod",
         android_version: "Version Android",
         last_seen: "Ultima localizzazione",
-        date_registered: "Data di Registrazione",
+        date_registered: "Data di registrazione",
         carrier: "Operatore Telefonico",
 
         locate: "Localizza",
-        locate_device: "Localizza Dispositivo",
+        locate_device: "Localizza dispositivo",
 
-        remote_wipe: "Cancellazione Remota",
-        remove_device: "Rimuovo Dispositivo",
+        remote_wipe: "Cancellazione remota",
+        remove_device: "Rimuovi dispositivo",
       },
 
       // Secure Message Partials (find/wipe)
       secure_message: {
-        locate_device: "Localizza Dispositivo",
-        authentication_failure: "Autenticazione Fallita!",
+        locate_device: "Localizza dispositivo",
+        authentication_failure: "Autenticazione fallita!",
         invalid_password: "La password da te inserita non è valida o la tua sessione è scaduta",
 
         enter_password: "Per favore, inserisci la tua password per collegarti al tuo dispositivo.",
@@ -120,7 +120,7 @@
       remove_device: {
         problem: "Si è verificato un problema durante la rimozione di questo dispositivo dal tuo account.",
         confirm: "Sei sicuro di voler rimuovere questo dispositivo?",
-        warning_message: "Se rimuovi questo dispositivo dal tuo Account CyanogenMod, non avrai piú la possibilita di usare funzionalitá come la localizzazione o la Cancellazione remota del tuo dispositivo.",
+        warning_message: "Se rimuovi questo dispositivo dal tuo Account CyanogenMod, non avrai piú la possibilita di usare funzionalitá come la localizzazione o la cancellazione remota del tuo dispositivo.",
       },
     });
   }]);
