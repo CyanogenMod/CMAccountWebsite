@@ -136,7 +136,10 @@ var DeviceFindController = function($scope, $routeParams, $http, $timeout, $anal
   $scope.havePassword = false;
   $scope.locationTimeout = false;
 
+  var timeoutPromise;
+
   var handleFailure = function() {
+    $timeout.cancel(timeoutPromise);
     $scope.plaintextPassword = undefined;
     $scope.havePassword = false;
     $scope.haveLocation = false;
@@ -160,7 +163,7 @@ var DeviceFindController = function($scope, $routeParams, $http, $timeout, $anal
         handleFailure();
       });
     });
-    $timeout(function() {
+    timeoutPromise = $timeout(function() {
       $analytics.eventTrack('locateTimeout', { category: 'device' });
       $scope.locationTimeout = true;
     }, 30000);
@@ -204,7 +207,10 @@ var DeviceWipeController = function($scope, $routeParams, $http, $timeout, $anal
   $scope.wipeTimeout = false;
   $scope.keyExchangeFailure = false;
 
+  var timeoutPromise;
+
   var handleFailure = function() {
+    $timeout.cancel(timeoutPromise);
     $scope.plaintextPassword = undefined;
     $scope.havePassword = false;
     $scope.haveLocation = false;
@@ -229,7 +235,7 @@ var DeviceWipeController = function($scope, $routeParams, $http, $timeout, $anal
         handleFailure();
       });
     });
-    $timeout(function() {
+    timeoutPromise = $timeout(function() {
       $scope.wipeTimeout = true;
       $analytics.eventTrack('wipeTimeout', { category: 'device' });
     }, 30000);
