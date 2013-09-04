@@ -29,30 +29,30 @@
     <![endif]-->
 
     <!-- begin navbar -->
-    <div class="navbar navbar-fixed-top">
-      <div class="container">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-
-        <a class="navbar-brand" href="/"><img src="/static/img/logo.png" alt="CyanogenMod Account"></a>
-
-        <div class="navbar-collapse collapse navbar-responsive-collapse">
-          <ul class="nav navbar-nav pull-right">
-            <li><a href="http://www.cyanogenmod.org/about" data-l10n-text="navbar.about">About</a></li>
-            <li><a href="http://download.cyanogenmod.org/" data-l10n-text="navbar.download">Download</a></li>
-            <li><a href="http://www.cyanogenmod.org/devices" data-l10n-text="navbar.devices">Devices</a></li>
-            <li><a href="http://www.cyanogenmod.org/blog" data-l10n-text="navbar.blog">Blog</a></li>
-            <li><a href="http://forum.cyanogenmod.org/" data-l10n-text="navbar.forum">Forum</a></li>
-            <li><a href="http://www.cyanogenmod.org/community" data-l10n-text="navbar.community">Community</a></li>
-            <li class="active"><a href="#" data-l10n-text="navbar.account">Account</a></li>
-          </ul>
-        </div>
-
+        <a class="navbar-brand" href="#"><img src="/static/img/logo.png" alt="CyanogenMod Account"/></a>
       </div>
-    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav pull-right">
+          <li><a href="http://www.cyanogenmod.org/about" data-l10n-text="navbar.about">About</a></li>
+          <li><a href="http://download.cyanogenmod.org/" data-l10n-text="navbar.download">Download</a></li>
+          <li><a href="http://www.cyanogenmod.org/devices" data-l10n-text="navbar.devices">Devices</a></li>
+          <li><a href="http://www.cyanogenmod.org/blog" data-l10n-text="navbar.blog">Blog</a></li>
+          <li><a href="http://forum.cyanogenmod.org/" data-l10n-text="navbar.forum">Forum</a></li>
+          <li><a href="http://www.cyanogenmod.org/community" data-l10n-text="navbar.community">Community</a></li>
+          <li class="active"><a href="#" data-l10n-text="navbar.account">Account</a></li>
+        </ul>
+      </div>
+    </nav>
     <!-- end navbar -->
 
     <!-- subnav -->
@@ -94,6 +94,7 @@
     <script src="/bower_components/angular/angular-route.min.js"></script>
     
     <script src="/bower_components/bootstrap/js/alert.js"></script>
+    <script src="/bower_components/bootstrap/js/transition.js"></script>
     <script src="/bower_components/bootstrap/js/collapse.js"></script>
     <script src="/bower_components/bootstrap/js/tooltip.js"></script>
     <script src="/bower_components/angulartics/src/angulartics.js"></script>
