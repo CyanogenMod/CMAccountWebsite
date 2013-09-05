@@ -1,6 +1,6 @@
 (function() {
-  angular.module('cmaccount.l10n.es-es', ['l10n']).config(['l10nProvider', function(l10n) {
-    l10n.add('es-es', {
+  angular.module('cmaccount.l10n.es', ['l10n']).config(['l10nProvider', function(l10n) {
+    l10n.add('es', {
       email: "Correo electrónico",
       password: "Contraseña",
       confirm_password: "Confirmar contraseña",

@@ -123,15 +123,34 @@
     <script src="/static/js/vendor/cryptojs/hmac.js"></script>
     <script src="/static/js/vendor/cryptojs/pbkdf2.js"></script>
     <!-- endbuild -->
+
+    <script src="/api/localedetect.js"></script>
     <!-- build:js(./appengine) /static/js/translations.js -->
-    <script src="/static/js/translations/en-us.js"></script>
+    <script src="/static/js/cmaccount/l10n.js"></script>
+    <script src="/static/js/translations/cs.js"></script>
+    <script src="/static/js/translations/el.js"></script>
+    <script src="/static/js/translations/en.js"></script>
+    <script src="/static/js/translations/es.js"></script>
+    <script src="/static/js/translations/fr.js"></script>
+    <script src="/static/js/translations/hu.js"></script>
+    <script src="/static/js/translations/nl.js"></script>
+    <script src="/static/js/translations/pt.js"></script>
+    <script src="/static/js/translations/sk.js"></script>
+    <script src="/static/js/translations/zh-tw.js"></script>
+    <script>
+      (function() {
+        var useLocale = locale.getBestSupported();
+        if (useLocale) {
+          document.write('<script src="/static/js/angular-i18n/angular-locale_' + useLocale + '.js"><\/script>');
+        }
+      }).call(this);
+    </script>
     <!-- endbuild -->
     <!-- build:js(./appengine) /static/js/app.js -->
     <script src="/static/js/vendor/retina.js"></script>
     <script src="/static/js/vendor/angular-l10n.js"></script>
     <script src="/static/js/cmaccount/logging.js"></script>
 
-    <script src="/static/js/cmaccount/storage.js"></script>
     <script src="/static/js/cmaccount/utils.js"></script>
     <script src="/static/js/cmaccount/api.js"></script>
     <script src="/static/js/cmaccount/channel.js"></script>

@@ -42,7 +42,7 @@
       <!-- form actions -->
       <div class="form-group">
         <div class="col-lg-5 col-lg-offset-2">
-          <button data-ng-click="signin()" data-ng-disabled="form.$invalid || polling" class="btn btn-primary"><i class="icon-ok"></i> Sign In</button>
+          <button data-ng-click="signin()" data-ng-disabled="form.$invalid || polling" class="btn btn-primary"><i class="icon-ok"></i> {{ 'Sign In' | l10n:'login.signin' }}</button>
         </div>
       </div>
       <!-- end actions -->
@@ -54,7 +54,7 @@
         <h3 class="panel-title" data-l10n-text="learn_more.what_is_cmaccount.title">What is a CyanogenMod Account?</h3>
       </div>
       <div class="panel-body">
-        <p data-l10n-text="what_is_cmaccount.text">A CyanogenMod Account provides access to value-add services and functionality for your mobile device running CyanogenMod.</p>
+        <p data-l10n-text="learn_more.what_is_cmaccount.text">A CyanogenMod Account provides access to value-add services and functionality for your mobile device running CyanogenMod.</p>
         <p><a href="/help" data-l10n-text="learn_more.learn_more">Learn More</a></p>
       </div>
     </div>

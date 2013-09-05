@@ -1,4 +1,4 @@
-var cmaccountModule = angular.module('cmaccount', ['ngRoute', 'cmaccount.api', 'cmaccount.channel', 'cmaccount.maps', 'cmaccount.directives', 'angulartics', 'angulartics.ga', 'l10n', 'cmaccount.l10n.en-us']);
+var cmaccountModule = angular.module('cmaccount', ['ngRoute', 'cmaccount.api', 'cmaccount.channel', 'cmaccount.maps', 'cmaccount.directives', 'angulartics', 'angulartics.ga', 'l10n', 'cmaccount.l10n']);
 
 cmaccountModule.config(function($routeProvider, $locationProvider, $httpProvider, $injector) {
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'CMID Website';

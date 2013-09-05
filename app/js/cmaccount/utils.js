@@ -95,6 +95,11 @@ var Util = (function(exports, _, CryptoJS) {
     }
   };
 
+  exports.setLocale = function(id) {
+    localStorage.setItem('locale', JSON.stringify({locale: id}));
+    location.reload();
+  };
+
   return exports;
 
 })(window.Util || {}, _, CryptoJS);

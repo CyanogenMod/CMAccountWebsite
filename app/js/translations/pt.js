@@ -1,6 +1,6 @@
 (function() {
-  angular.module('cmaccount.l10n.pt-br', ['l10n']).config(['l10nProvider', function(l10n) {
-    l10n.add('pt-br', {
+  angular.module('cmaccount.l10n.pt', ['l10n']).config(['l10nProvider', function(l10n) {
+    l10n.add('pt', {
       // Generic
       email: "Email",
       password: "Senha",

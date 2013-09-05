@@ -3,8 +3,8 @@
 // TODO(ctso): Translate form validation errors.
 
 (function() {
-  angular.module('cmaccount.l10n.cs-cz', ['l10n']).config(['l10nProvider', function(l10n) {
-    l10n.add('cs-cz', {
+  angular.module('cmaccount.l10n.cs', ['l10n']).config(['l10nProvider', function(l10n) {
+    l10n.add('cs', {
       // Generic
       email: "Email",
       password: "Heslo",

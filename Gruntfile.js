@@ -24,6 +24,7 @@ module.exports = function(grunt) {
     connect: {
       rules: {
         '^/bower_components/(.*)$': '/bower_components/$1',
+        '^/static/js/angular-i18n/(.*)$': '/bower_components/angular/i18n/$1',
         '^/static/(.*)$': '/app/$1',
         '^/.*$': '/app/index.html'
       },
