@@ -13,6 +13,7 @@
       continue: "Pokračovat",
       cancel: "Zrušit",
       privacy_policy: "Zásady ochrany osobních údajů",
+      alert_error: 'Chyba!',
 
       // Top Navigation
       navbar: {
@@ -107,6 +108,7 @@
       secure_message: {
         locate_device: "Lokalizovat zařízení",
         authentication_failure: "Autentizace selhala!",
+        encryption_failure: "Vyskytla se chyba při vytváření zabezpečeného kanálu do zařízení. Prosím zkuste to znovu za chvíli.",
         invalid_password: "Zadané heslo je neplatné nebo webové sezení vypršelo",
 
         enter_password: "Prosím zadejte heslo pro připojení k zařízení.",
