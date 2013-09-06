@@ -158,8 +158,10 @@ var DeviceFindController = function($scope, $routeParams, $http, $timeout, $anal
         handleFailure();
       });
       SecureMessageService.sendGCM(deviceKey, hashedPassword, $scope.device.salt, {command: 'begin_locate'}).then(function() {
-      }, function() {
-        // Error callback, remote public key verification failed.
+      }, function(error) {
+        if (error && error.errors && Util.matchError(error.errors, 8)) {
+          $scope.publicKeysExhausted = true;
+        }
         handleFailure();
       });
     });
@@ -230,8 +232,10 @@ var DeviceWipeController = function($scope, $routeParams, $http, $timeout, $anal
       });
       SecureMessageService.sendGCM(deviceKey, hashedPassword, $scope.device.salt, {command: 'begin_wipe'}).then(function() {
       },
-      function() {
-        // Error callback, public key verification failed.
+      function(error) {
+        if (error && error.errors && Util.matchError(error.errors, 8)) {
+          $scope.publicKeysExhausted = true;
+        }
         handleFailure();
       });
     });

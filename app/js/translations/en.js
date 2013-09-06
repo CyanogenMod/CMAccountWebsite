@@ -13,6 +13,7 @@
       continue: "Continue",
       cancel: "Cancel",
       privacy_policy: "Privacy Policy",
+      alert_error: 'Error!',
 
       // Top Navigation
       navbar: {
@@ -107,6 +108,7 @@
       secure_message: {
         locate_device: "Locate Device",
         authentication_failure: "Authentication Failure!",
+        encryption_failure: "There was a problem opening a secure channel to your device.  Please try again in a few minutes.",
         invalid_password: "The password you entered was invalid or  your session has expired",
 
         enter_password: "Please enter your password to authenticate with your device.",

@@ -195,6 +195,10 @@ channelModule.service('SecureMessageService', function($q, $http, $rootScope, $a
 
     if (!self.aesKey) {
       $http.get(API_BASE + "/device/get_public_key?device_key=" + deviceKey, {requireToken: true}).success(function(response) {
+        if (response.errors) {
+          dfd.reject(response);
+          return;
+        }
         // Verify remote public key
         var publicKeySignatureBody = response.public_key;
         var publicKeySignatureHex = CryptoJS.enc.Hex.stringify(CryptoJS.HmacSHA256(publicKeySignatureBody, self.hmacSecret));
@@ -253,7 +257,7 @@ channelModule.service('SecureMessageService', function($q, $http, $rootScope, $a
       dfd.resolve();
     }, function(error) {
       logging.error("SecureMessageService: Error getting public key from server:", error);
-      dfd.reject();
+      dfd.reject(error);
     });
     return dfd.promise;
   };
