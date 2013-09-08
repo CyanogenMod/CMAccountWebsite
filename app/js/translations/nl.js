@@ -8,6 +8,7 @@
       continue: "Doorgaan",
       cancel: "Annuleren",
       privacy_policy: "Privacybeleid",
+      alert_error: "Fout",
 
       navbar: {
         about: 'Over',
@@ -92,6 +93,7 @@
       secure_message: {
         locate_device: "Apparaat lokaliseren",
         authentication_failure: "Authenticatie mislukt",
+        encryption_failure: "Er kon geen beveiligde verbinding met uw apparaat tot stand worden gebracht. Probeer het over enkele minuten opnieuw.",
         invalid_password: "Het ingevoerde wachtwoord is ongeldig of uw sessie is verlopen",
 
         enter_password: "Voer a.u.b. uw wachtwoord in om te authenticeren met uw apparaat.",
