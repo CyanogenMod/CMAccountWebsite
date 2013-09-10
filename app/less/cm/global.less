@@ -1,10 +1,5 @@
 body {
-    padding-top: @navbar-height;
     background-color: @body-background-color;
-}
-
-.container.content {
-    margin-top: 20px;
 }
 
 .loading {
@@ -28,4 +23,23 @@ body {
             margin-right: 5px;
         }
     }
+}
+
+.icon-cid {
+    background: url(/static/img/cid.png) no-repeat center center;
+    display: inline-block;
+
+    width: 15px;
+    height: 14px;
+    background-size: 15px 14px;
+}
+
+.icon-cid.icon-small {
+    background-size: 13px 12px;
+    width: 13px;
+    height: 12px;
+}
+
+.page-header {
+    padding-top: @page-header-padding-top;
 }
