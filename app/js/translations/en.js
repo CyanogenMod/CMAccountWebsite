@@ -12,6 +12,7 @@
       logout: "Log Out",
       continue: "Continue",
       cancel: "Cancel",
+      terms_of_service: "Terms of Service",
       privacy_policy: "Privacy Policy",
       alert_error: 'Error!',
 
