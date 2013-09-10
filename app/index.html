@@ -72,19 +72,50 @@
     <div class="loading" data-ng-show="polling"><span><i class="icon-refresh icon-spin"></i> Loading ...</span></div>
     <!-- /loading status -->
 
-    <div class="container content">
-      <!--[if lt IE 10]>
-      <div class="alert alert-info">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Unsupported Browser!</strong>
-        You are using a browser that is not fully supported.  Please consider <a class="alert-link" href="http://www.browsehappy.com/" target="_blank">upgrading your browser</a> for a better experience.
+    <div id="wrap">
+      <div class="container content">
+        <!--[if lt IE 10]>
+        <div class="alert alert-info">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Unsupported Browser!</strong>
+          You are using a browser that is not fully supported.  Please consider <a class="alert-link" href="http://www.browsehappy.com/" target="_blank">upgrading your browser</a> for a better experience.
+        </div>
+        <![endif]-->
+        <div data-ng-show="networkError && !loginController" class="alert alert-danger" style="display: none">
+          <strong>Network Error!</strong>
+          There was an unexpected error while making a network request.  Please try <a class="alert-link" href="javascript:location.reload()">reloading the page</a>.
+        </div>
+        <div data-ng-view></div>
       </div>
-      <![endif]-->
-      <div data-ng-show="networkError && !loginController" class="alert alert-danger" style="display: none">
-        <strong>Network Error!</strong>
-        There was an unexpected error while making a network request.  Please try <a class="alert-link" href="javascript:location.reload()">reloading the page</a>.
+    </div>
+
+    <div id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="list-inline ng-cloak">
+              <li data-ng-repeat="language in locale.supported | orderBy:'weight' | limitTo:locale.showInFooter"><a href="#" data-prevent-default data-ng-click="setLocale(language.code)">{{ language.name }}</a></li>
+              <li data-ng-hide="locale.showInFooter == locale.supported.length"><a href="#" data-prevent-default data-ng-click="locale.showInFooter=locale.supported.length" class="more">…</a></li>
+            </ul>
+            <hr/>
+            <ul class="list-inline">
+              <li><a href="http://www.cyanogenmod.org/about" target="_blank">About</a></li>
+              <li><a href="http://download.cyanogenmod.org/">Download</a></li>
+              <li><a href="http://wiki.cyanogenmod.org/" target="_blank">Devices</a></li>
+              <li><a href="http://www.cyanogenmod.org/blog" target="_blank">Blog</a></li>
+              <li><a href="http://forum.cyanogenmod.org" target="_blank">Forum</a></li>
+              <li><a href="http://www.cyanogenmod.org/community" target="_blank">Community</a></li>
+              <li><a href="https://account.cyanogenmod.org" target="_blank">Account</a></li>
+            </ul>
+            <ul class="list-inline">
+              <li><a href="http://www.cyanogenmod.org/docs/terms" target="_blank">Terms of Service</a></li>
+              <li></li>
+              <li><a href="http://www.cyanogenmod.org/docs/privacy" target="_blank">Privacy Policy</a></li>
+            </ul>
+            <p class="text-muted">&copy; 2013 CyanogenMod, LLC. <i class="icon-cid icon-small" style="margin-left: 13px;"></i></p>
+          </div>
+        </div>
       </div>
-      <div data-ng-view></div>
     </div>
 
     <!-- Libraries -->

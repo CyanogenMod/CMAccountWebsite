@@ -126,4 +126,10 @@ cmaccountModule.run(function($rootScope, $route, $location, AuthService, API_BAS
     });
   };
   $rootScope.md5 = Util.md5;
+
+  $rootScope.locale = {
+    set: Util.setLocale,
+    supported: locale.languages,
+    showInFooter: 5,
+  };
 });
