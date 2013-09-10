@@ -123,3 +123,21 @@ directivesModule.directive('bsNavbar', function($location) {
     }
   };
 });
+
+directivesModule.directive('matchLocale', function() {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs, controller) {
+      scope.$watch(function() {
+        return scope.locale.current;
+      }, function(newValue, oldValue) {
+        var liLocale = attrs.matchLocale;
+        if (scope.locale.current == liLocale) {
+          element.addClass('active');
+        } else {
+          element.removeClass('active');
+        }
+      });
+    }
+  };
+});

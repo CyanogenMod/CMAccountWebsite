@@ -1,15 +1,41 @@
 @FontAwesomePath: "//netdna.bootstrapcdn.com/font-awesome/3.2.1/font";
 @font-family-sans-serif: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-// Global
+// Colors
 @body-background-color: #fff;
+
+@red:       #9d261d;
+
+@holo-blue: #33b5e5;
+@holo-blue-dark:   darken(@holo-blue, 15%);
+@holo-blue-darker: darken(@holo-blue, 20%);
+
+@gray-lightest: lighten(#000, 95%);
+
+// Content
+@content-padding:          20px;
 
 // Navbar
 @navbar-height:            60px;
-@navbar-bg-start:          #f0f0f0;
-@navbar-bg:                #e6e6e6;
+@navbar-bg-start:          darken(#fff, 3%);  // #f7f7f7
+@navbar-bg:                darken(#fff, 10%); // #e6e6e6
+
+@navbar-border-color:      #c7c7c7;
+@navbar-border-width:      1px;
 
 @navbar-default-link-color: @navbar-default-link-hover-color;
+
+// Footer
+@footer-background-color:  @navbar-bg-start;
+@footer-border-color:      @navbar-border-color;
+@footer-border-width:      1px;
+@footer-font-color:        darken(@footer-background-color, 50%);
+@footer-font-size:         @font-size-small;
+@footer-height:            (@footer-line-height + (@footer-row-padding * @footer-rows))*2+@footer-row-padding;
+@footer-line-height-base:  1.416666667; // 17/2
+@footer-line-height:       floor(@line-height-base * @footer-font-size);
+@footer-rows:              5;
+@footer-row-padding:       10px;
 
 // Tabbed nav
 //@nav-tabs-bg:               #ededed;
@@ -19,9 +45,4 @@
 //@nav-tabs-border-color:     #c8c8c8;
 @nav-tabs-border-color:     #e2e2e2;
 
-// Colors
-@red:       #9d261d;
-
-@holo-blue: #33b5e5;
-@holo-blue-dark:   darken(@holo-blue, 15%);
-@holo-blue-darker: darken(@holo-blue, 20%);
+@page-header-padding-top: 0px;

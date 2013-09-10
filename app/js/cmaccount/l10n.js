@@ -1,18 +1,18 @@
 (function() {
   window.locale = window.locale || {};
-  locale.supported = [
-    'cs',
-    'el',
-    'en',
-    'es',
-    'fr',
-    'hu',
-    'nl',
-    'pt',
-    'sk',
-    'zh-tw'
+  locale.languages = [
+    {             'code': 'cs', 'name': 'Czech'},
+    {             'code': 'el', 'name': 'ελληνικά'},
+    {'weight': 1, 'code': 'en', 'name': 'English'},
+    {'weight': 4, 'code': 'es', 'name': 'Español'},
+    {'weight': 5, 'code': 'fr', 'name': 'Français'},
+    {             'code': 'hu', 'name': 'magyar nyelv'},
+    {             'code': 'nl', 'name': 'Dutch'},
+    {'weight': 3, 'code': 'pt', 'name': 'Português'},
+    {             'code': 'sk', 'name': 'Slovenský'},
+    {'weight': 2, 'code': 'zh-tw', 'name': '中文(正體字)'},
   ];
-
+  locale.supported = _.pluck(locale.languages, 'code');
   locale.getBestSupported = function() {
     var bestWeight = -1;
     var bestLocale = undefined;
@@ -36,6 +36,16 @@
 
     return undefined;
   };
+
+  locale.set = function(code) {
+    locale.current = code;
+    localStorage.setItem('locale', JSON.stringify({locale: code}));
+    $scope.$digest();
+    //location.reload();
+  };
+
+  locale.showInFooter = 5;
+  locale.current = locale.getBestSupported();
   
   var localeModules = _.map(locale.supported, function(locale) {
     return 'cmaccount.l10n.' + locale;

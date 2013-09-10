@@ -1,0 +1,61 @@
+/* Sticky Footer */
+html,
+body {
+    height: 100%;
+}
+
+/* Wrapper for page content, pushes down the footer */
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by its height */
+    margin: 0 auto (@footer-height * -1);
+    /* Pad bottom by footer height */
+    padding: (@navbar-height + @content-padding) 0 @footer-height;
+}
+
+#footer {
+    border-top: @footer-border-width solid @footer-border-color;
+    height: @footer-height + @footer-border-width;
+    font-size: @footer-font-size;
+    background-color: @footer-background-color;
+}
+
+/* Center text vertically */
+#footer hr { 
+    margin-top: @footer-row-padding;
+    margin-bottom: 0px;
+}
+#footer p,
+#footer ul {
+    &:first-child {
+        padding-top: (@footer-height - (@footer-line-height * @footer-rows)-(10*@footer-rows));
+    }
+    padding-top: @footer-row-padding;
+    &:last-child {
+        padding-top: @footer-row-padding * 2;
+        padding-bottom: @footer-row-padding;
+    }
+    margin-bottom: 0;
+}
+
+#footer ul li:first-child {
+    padding-left: 0px;
+}
+
+#footer a { color: @footer-font-color; }
+
+#footer a.more {
+    background: lighten(@footer-font-color, 45%);
+    padding-right: 8px;
+    padding-left: 8px;
+}
+
+#footer li.active a       { font-weight: bold; }
+#footer li.active a:hover { text-decoration: none; }
+
+#footer a.more:hover {
+    background: lighten(@footer-font-color, 35%);
+    text-decoration: none;
+}
