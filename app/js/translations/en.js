@@ -125,6 +125,19 @@
         confirm: "Are you sure you want to remove this device?",
         warning_message: "If you remove this device from your CyanogenMod Account, you will no longer be able to use features like locating or remote wiping your device.",
       },
+
+      // Account Partial
+      account: {
+        title: "My Account",
+        alert_invalid: "The current password you entered is incorrect.",
+        alert_success: "Your password has been successfully changed.",
+        change_password: "Change Password",
+        current_password: "Current Password",
+        new_password: "New Password",
+        confirm_new_password: "Confirm New Password",
+        error_complexity: "Your password must be at least eight (8) characters long.",
+        error_match: "The password you entered do not match."
+      },
     });
   }]);
 }).call(this);
