@@ -226,35 +226,37 @@ channelModule.service('SecureMessageService', function($q, $http, $rootScope, $a
     var dfd = $q.defer();
     deviceSalt = CryptoJS.enc.Base64.parse(deviceSalt);
     getSymmetricKey(deviceKey, deviceSalt, password).then(function(symmetricKey) {
-      self.localSequence += 1;
+      self.openChannel().then(function() {
+        self.localSequence += 1;
 
-      // Encrypt the plaintext message
-      var encrypted = Util.aes.encrypt(JSON.stringify(plaintextMessage), self.aesKey);
-      var message = {
-        command: 'secure_message',
-        device_key: deviceKey,
-        payload: {
-          key_id: self.keyId,
-          ciphertext: encrypted
-        },
-        sequence: self.localSequence
-      };
+        // Encrypt the plaintext message
+        var encrypted = Util.aes.encrypt(JSON.stringify(plaintextMessage), self.aesKey);
+        var message = {
+          command: 'secure_message',
+          device_key: deviceKey,
+          payload: {
+            key_id: self.keyId,
+            ciphertext: encrypted
+          },
+          sequence: self.localSequence
+        };
 
-      // If this is the first message we are sending, include our public key.
-      if (self.localSequence == 1) {
-        message.payload.public_key = Util.ecdh.getPublic().toHex();
-      }
+        // If this is the first message we are sending, include our public key.
+        if (self.localSequence == 1) {
+          message.payload.public_key = Util.ecdh.getPublic().toHex();
+        }
 
-      // JSON stringify the payload
-      message.payload = JSON.stringify(message.payload);
+        // JSON stringify the payload
+        message.payload = JSON.stringify(message.payload);
 
-      // Sign payload
-      var payloadSignature = CryptoJS.enc.Hex.stringify(CryptoJS.HmacSHA256(message.sequence + ':' + message.payload, self.hmacSecret));
-      message.signature = payloadSignature;
+        // Sign payload
+        var payloadSignature = CryptoJS.enc.Hex.stringify(CryptoJS.HmacSHA256(message.sequence + ':' + message.payload, self.hmacSecret));
+        message.signature = payloadSignature;
 
-      logging.debug("SecureMessageService: Sending secure GCM", message);
-      $http.post(API_BASE + '/secmsg/send_gcm', message, {requireToken: true});
-      dfd.resolve();
+        logging.debug("SecureMessageService: Sending secure GCM", message);
+        $http.post(API_BASE + '/secmsg/send_gcm', message, {requireToken: true});
+        dfd.resolve();
+      });
     }, function(error) {
       logging.error("SecureMessageService: Error getting public key from server:", error);
       dfd.reject(error);

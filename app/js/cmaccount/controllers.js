@@ -150,21 +150,22 @@ var DeviceFindController = function($scope, $routeParams, $http, $timeout, $anal
   // Hook up the authenticate method to the scope
   $scope.authenticate = function() {
     $scope.havePassword = true;
-    SecureMessageService.openChannel().then(function() {
-      var hashedPassword = Util.sha512($scope.plaintextPassword);
-      SecureMessageService.ready().then(function() {
-      }, function() {
-        // Error callback, key exchange failure.
-        handleFailure();
-      });
-      SecureMessageService.sendGCM(deviceKey, hashedPassword, $scope.device.salt, {command: 'begin_locate'}).then(function() {
-      }, function(error) {
-        if (error && error.errors && Util.matchError(error.errors, 8)) {
-          $scope.publicKeysExhausted = true;
-        }
-        handleFailure();
-      });
+
+    SecureMessageService.ready().then(function() {
+    }, function() {
+      // Error callback, key exchange failure.
+      handleFailure();
     });
+
+    var hashedPassword = Util.sha512($scope.plaintextPassword);
+    SecureMessageService.sendGCM(deviceKey, hashedPassword, $scope.device.salt, {command: 'begin_locate'}).then(function() {
+    }, function(error) {
+      if (error && error.errors && Util.matchError(error.errors, 8)) {
+        $scope.publicKeysExhausted = true;
+      }
+      handleFailure();
+    });
+
     timeoutPromise = $timeout(function() {
       $analytics.eventTrack('locateTimeout', { category: 'device' });
       $scope.locationTimeout = true;
@@ -223,22 +224,22 @@ var DeviceWipeController = function($scope, $routeParams, $http, $timeout, $anal
   // Hook up the authenticate method to the scope
   $scope.authenticate = function() {
     $scope.havePassword = true;
-    SecureMessageService.openChannel().then(function() {
-      var hashedPassword = Util.sha512($scope.plaintextPassword);
-      SecureMessageService.ready().then(function() {
-      }, function() {
-        // Error callback, key exchange failure.
-        handleFailure();
-      });
-      SecureMessageService.sendGCM(deviceKey, hashedPassword, $scope.device.salt, {command: 'begin_wipe'}).then(function() {
-      },
-      function(error) {
-        if (error && error.errors && Util.matchError(error.errors, 8)) {
-          $scope.publicKeysExhausted = true;
-        }
-        handleFailure();
-      });
+    
+    SecureMessageService.ready().then(function() {
+    }, function() {
+      // Error callback, key exchange failure.
+      handleFailure();
     });
+
+    var hashedPassword = Util.sha512($scope.plaintextPassword);
+    SecureMessageService.sendGCM(deviceKey, hashedPassword, $scope.device.salt, {command: 'begin_locate'}).then(function() {
+    }, function(error) {
+      if (error && error.errors && Util.matchError(error.errors, 8)) {
+        $scope.publicKeysExhausted = true;
+      }
+      handleFailure();
+    });
+
     timeoutPromise = $timeout(function() {
       $scope.wipeTimeout = true;
       $analytics.eventTrack('wipeTimeout', { category: 'device' });
