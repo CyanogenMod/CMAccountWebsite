@@ -73,12 +73,12 @@
           required: "Creation of a CyanogenMod account requires only basic information including email address.",
           // Note: This string ends with a link to "Privacy Policy"
           // TODO(ctso): Implement a way to safely embed html in the translations.
-          usage: "CyanogenMod will never sell your personal information.  This information will be used only in accordance with our",
+          usage: "CyanogenMod will never sell your personal information. This information will be used only in accordance with our",
         },
 
         secure: {
           title: "Is it secure?",
-          communication: "All communication between your browser or device and our servers is SSL encrypted.  Additionally, we will never send your plaintext password to our servers.",
+          communication: "All communication between your browser or device and our servers is SSL encrypted. Additionally, we will never send your plaintext password to our servers.",
           priority: "Given the nature of the \"Find My Phone\" and \"Remote Wipe\" features, security is our number one priority. You cannot locate or wipe your device without first authenticating using your password. All communication with your device, including location information, is encrypted and inaccessible to any CyanogenMod servers, personnel, or partners.",
         },
 
@@ -109,8 +109,8 @@
       secure_message: {
         locate_device: "Locate Device",
         authentication_failure: "Authentication Failure!",
-        encryption_failure: "There was a problem opening a secure channel to your device.  Please try again in a few minutes.",
-        invalid_password: "The password you entered was invalid or  your session has expired",
+        encryption_failure: "There was a problem opening a secure channel to your device. Please try again in a few minutes.",
+        invalid_password: "The password you entered was invalid or your session has expired",
 
         enter_password: "Please enter your password to authenticate with your device.",
         wait_secure_channel: "Please wait while we open a secure channel to your device.",
