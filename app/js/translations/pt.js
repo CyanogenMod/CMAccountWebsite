@@ -9,6 +9,7 @@
       continue: "Continuar",
       cancel: "Cancelar",
       privacy_policy: "Política de Privacidade",
+      alert_error: 'Erro!',
 
       // Top Navigation
       navbar: {
@@ -103,6 +104,7 @@
       secure_message: {
         locate_device: "Localizar Dispositivo",
         authentication_failure: "Falha na autenticação!",
+        encryption_failure: "Ocorreu um problema ao abrir um canal seguro com o seu dispositivo. Favor tentar novamente em alguns minutos.",
         invalid_password: "A senha que voce inseriu é inválida ou sua sessão expirou",
 
         enter_password: "Favor insira sua senha para autenticar com o seu dispositivo.",
@@ -117,6 +119,19 @@
         problem: "Ocorreu um problema ao remover seu dispositivo de sua conta.",
         confirm: "Você tem certeza que quer remover este dispositivo?",
         warning_message: "Se você remover este dispositivo de sua conta CyanogenMod, você não será capaz de usar recursos no seu dispositivo de localização ou apagar remotamente.",
+      },
+      
+      // Account Partial
+      account: {
+        title: "Minha Conta",
+        alert_invalid: "A senha inserida está incorreta.",
+        alert_success: "Sua senha foi alterada com sucesso.",
+        change_password: "Alterar Senha",
+        current_password: "Senha Atual",
+        new_password: "Nova Senha",
+        confirm_new_password: "Confirmar Nova Senha",
+        error_complexity: "Sua senha deve conter no mínimo oito (8) caracteres.",
+        error_match: "As senhas que você digitou não são iguais."
       },
     });
   }]);
