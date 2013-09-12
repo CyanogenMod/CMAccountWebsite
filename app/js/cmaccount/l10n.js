@@ -4,13 +4,15 @@
     {             'code': 'cs', 'name': 'Czech'},
     {             'code': 'el', 'name': 'ελληνικά'},
     {'weight': 1, 'code': 'en', 'name': 'English'},
-    {'weight': 4, 'code': 'es', 'name': 'Español'},
-    {'weight': 5, 'code': 'fr', 'name': 'Français'},
+    {'weight': 5, 'code': 'es', 'name': 'Español'},
+    {'weight': 4, 'code': 'fr', 'name': 'Français'},
     {             'code': 'hu', 'name': 'magyar nyelv'},
     {             'code': 'nl', 'name': 'Dutch'},
+    {             'code': 'pl', 'name': 'Polski'},
     {'weight': 3, 'code': 'pt', 'name': 'Português'},
+    {'weight': 2, 'code': 'ru', 'name': 'русский'},
     {             'code': 'sk', 'name': 'Slovenský'},
-    {'weight': 2, 'code': 'zh-tw', 'name': '中文(正體字)'},
+    {             'code': 'zh-tw', 'name': '中文(正體字)'},
   ];
   locale.supported = _.pluck(locale.languages, 'code');
   locale.getBestSupported = function() {
