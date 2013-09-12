@@ -60,7 +60,7 @@ channelModule.service('ChannelService', function($q, $http, $rootScope, $timeout
   };
 });
 
-channelModule.service('SecureMessageService', function($q, $http, $rootScope, $analytics, ChannelService, API_BASE) {
+channelModule.service('SecureMessageService', function($q, $http, $rootScope, $analytics, $timeout, ChannelService, API_BASE) {
   this.aesKey = null;
   this.keyId = null;
   this.remoteSequence = 0;
@@ -191,33 +191,43 @@ channelModule.service('SecureMessageService', function($q, $http, $rootScope, $a
   var getSymmetricKey = function(deviceKey, deviceSalt, password) {
     logging.debug("SecureMessageService: Asking server for public key");
     var dfd = $q.defer();
-    self.hmacSecret = CryptoJS.PBKDF2(password, deviceSalt, { keySize: 32/4, iterations: 1024 });
 
-    if (!self.aesKey) {
-      $http.get(API_BASE + "/device/get_public_key?device_key=" + deviceKey, {requireToken: true}).success(function(response) {
-        if (response.errors) {
-          dfd.reject(response);
-          return;
-        }
-        // Verify remote public key
-        var publicKeySignatureBody = response.public_key;
-        var publicKeySignatureHex = CryptoJS.enc.Hex.stringify(CryptoJS.HmacSHA256(publicKeySignatureBody, self.hmacSecret));
-        if (publicKeySignatureHex != response.signature) {
-          logging.error("SecureMessageService: Remote public key verification failed.");
-          dfd.reject();
-        };
-        setKeyId(response.key_id);
-        var remotePublicKey = new ECPublicKey(response.public_key);
-        var keyHex = Util.bytesToHex(Util.ecdh.getSecret(remotePublicKey));
-        // Hash the private key with SHA256 to use as AES key
-        self.aesKey = CryptoJS.enc.Hex.stringify(CryptoJS.SHA256(CryptoJS.enc.Hex.parse(keyHex)));
+    $rootScope.processing = true;
+    var hmacPromise = $q.defer();
+
+    $timeout(function() {
+      self.hmacSecret = CryptoJS.PBKDF2(password, deviceSalt, { keySize: 32/4, iterations: 1024 });
+      hmacPromise.resolve();
+    }, 1000);
+
+    hmacPromise.promise.then(function() {
+      $rootScope.processing = false;
+      if (!self.aesKey) {
+        $http.get(API_BASE + "/device/get_public_key?device_key=" + deviceKey, {requireToken: true}).success(function(response) {
+          if (response.errors) {
+            dfd.reject(response);
+            return;
+          }
+          // Verify remote public key
+          var publicKeySignatureBody = response.public_key;
+          var publicKeySignatureHex = CryptoJS.enc.Hex.stringify(CryptoJS.HmacSHA256(publicKeySignatureBody, self.hmacSecret));
+          if (publicKeySignatureHex != response.signature) {
+            logging.error("SecureMessageService: Remote public key verification failed.");
+            dfd.reject();
+          };
+          setKeyId(response.key_id);
+          var remotePublicKey = new ECPublicKey(response.public_key);
+          var keyHex = Util.bytesToHex(Util.ecdh.getSecret(remotePublicKey));
+          // Hash the private key with SHA256 to use as AES key
+          self.aesKey = CryptoJS.enc.Hex.stringify(CryptoJS.SHA256(CryptoJS.enc.Hex.parse(keyHex)));
+          dfd.resolve(self.aesKey);
+        }).error(function(error) {
+          dfd.reject(error);
+        });
+      } else {
         dfd.resolve(self.aesKey);
-      }).error(function(error) {
-        dfd.reject(error);
-      });
-    } else {
-      dfd.resolve(self.aesKey);
-    }
+      }
+    });
 
     return dfd.promise;
   };
