@@ -10,7 +10,7 @@
     {             'code': 'nl', 'name': 'Dutch'},
     {             'code': 'pl', 'name': 'Polski'},
     {'weight': 3, 'code': 'pt', 'name': 'Português'},
-    {'weight': 2, 'code': 'ru', 'name': 'русский'},
+    {'weight': 2, 'code': 'ru', 'name': 'Pусский'},
     {             'code': 'sk', 'name': 'Slovenský'},
     {             'code': 'zh-tw', 'name': '中文(正體字)'},
   ];
