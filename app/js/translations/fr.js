@@ -12,7 +12,9 @@
       logout: "Déconnexion",
       continue: "Continuer",
       cancel: "Annuler",
+      terms_of_service: "Conditions d'utilisation",
       privacy_policy: "Politique de confidentialité",
+      alert_error: 'Erreur !',
 
       // Top Navigation
       navbar: {
@@ -107,6 +109,7 @@
       secure_message: {
         locate_device: "Localiser l'appareil",
         authentication_failure: "Authentification échouée !",
+        encryption_failure: "Un problème a été rencontré lors de l'ouverture d'un canal sécurisé avec votre appareil. Réessayez ultérieurement.",
         invalid_password: "Le mot de passe entré est invalide ou votre session a expiré.",
 
         enter_password: "Entrez votre mot de passe pour vous authentifier avec votre appareil.",
@@ -121,6 +124,19 @@
         problem: "Un problème a été rencontré pendant la suppression de l'appareil de votre compte.",
         confirm: "Voulez-vous vraiment supprimer cet appareil ?",
         warning_message: "Si vous supprimez cet appareil de votre compte CyanogenMod, vous ne serez plus en mesure d'utiliser les fonctionnalités telles que la localisation ou l'effacement à distance de votre appareil.",
+      },
+
+      // Account Partial
+      account: {
+        title: "Mon compte",
+        alert_invalid: "Le mot de passe entré est incorrect.",
+        alert_success: "Votre mot de passe a été changé avec succès.",
+        change_password: "Changer de mot de passe",
+        current_password: "Mot de passe actuel",
+        new_password: "Nouveau mot de passe",
+        confirm_new_password: "Confirmer le nouveau mot de passe",
+        error_complexity: "Votre mot de passe doit contenir au moins huit (8) caractères.",
+        error_match: "Les mots de passe saisis ne correspondent pas."
       },
     });
   }]);
