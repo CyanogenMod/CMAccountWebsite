@@ -136,7 +136,7 @@
         new_password: "New Password",
         confirm_new_password: "Confirm New Password",
         error_complexity: "Your password must be at least eight (8) characters long.",
-        error_match: "The password you entered do not match."
+        error_match: "The passwords you entered do not match."
       },
     });
   }]);
