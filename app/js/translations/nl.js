@@ -7,6 +7,7 @@
       logout: "Uitloggen",
       continue: "Doorgaan",
       cancel: "Annuleren",
+      terms_of_service: "Servicevoorwaarden",
       privacy_policy: "Privacybeleid",
       alert_error: "Fout",
 
@@ -87,7 +88,7 @@
         locate_device: "Apparaat lokaliseren",
 
         remote_wipe: "Wissen op afstand",
-        remove_device: "Apparaat wissen op afstand",
+        remove_device: "Apparaat verwijderen",
       },
 
       secure_message: {
@@ -107,6 +108,18 @@
         problem: "Dit apparaat kan niet worden verwijderd van uw account.",
         confirm: "Weet u zeker dat u dit apparaat wilt verwijderen?",
         warning_message: "Indien u dit apparaat verwijdert van uw CyanogenMod-account, beschikt u niet meer over functies zoals het lokaliseren of op afstand wissen van uw apparaat.",
+      },
+
+      account: {
+        title: "Mijn account",
+        alert_invalid: "Het huidige wachtwoord dat u heeft ingevoerd is onjuist.",
+        alert_success: "Uw wachtwoord is succesvol gewijzigd.",
+        change_password: "Wachtwoord wijzigen",
+        current_password: "Huidig wachtwoord",
+        new_password: "Nieuw wachtwoord",
+        confirm_new_password: "Nieuw wachtwoord bevestigen",
+        error_complexity: "Uw wachtwoord moet minimaal 8 tekens bevatten.",
+        error_match: "De wachtwoorden komen niet overeen."
       },
     });
   }]);
