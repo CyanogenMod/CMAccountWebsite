@@ -12,7 +12,9 @@
       logout: "登出",
       continue: "繼續",
       cancel: "取消",
+      terms_of_service: "服務條款",
       privacy_policy: "隱私權政策",
+      alert_error: '錯誤！',
 
       // Top Navigation
       navbar: {
@@ -121,6 +123,19 @@
         problem: "從您的帳戶中刪除此裝置時，發生問題。",
         confirm: "您確定要移除此裝置？",
         warning_message: "如果從 CyanogenMod 帳戶移除此裝置，您將不能夠再使用我們提供的功能，如定位或遠端 Wipe 裝置。",
+      },
+
+      // Account Partial
+      account: {
+        title: "我的帳戶",
+        alert_invalid: "您所輸入的目前密碼不正確。",
+        alert_success: "已成功變更您的密碼。",
+        change_password: "變更密碼",
+        current_password: "目前的密碼",
+        new_password: "新密碼",
+        confirm_new_password: "確認新密碼",
+        error_complexity: "您的密碼必須至少為8個字元。",
+        error_match: "您輸入的密碼不相符。"
       },
     });
   }]);
