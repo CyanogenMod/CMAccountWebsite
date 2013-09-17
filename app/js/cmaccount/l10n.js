@@ -7,6 +7,7 @@
     {'weight': 5, 'code': 'es', 'name': 'Español'},
     {'weight': 4, 'code': 'fr', 'name': 'Français'},
     {             'code': 'hu', 'name': 'magyar nyelv'},
+    {             'code': 'it', 'name': 'Italiano'},
     {             'code': 'nl', 'name': 'Dutch'},
     {             'code': 'pl', 'name': 'Polski'},
     {'weight': 3, 'code': 'pt', 'name': 'Português'},
