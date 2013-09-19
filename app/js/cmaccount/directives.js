@@ -141,3 +141,36 @@ directivesModule.directive('matchLocale', function() {
     }
   };
 });
+
+directivesModule.directive('cmTooltip', function($parse, $compile) {
+  return {
+    restrict: 'A',
+    scope: true,
+    link: function(scope, element, attrs, ctrl) {
+      var getter = $parse(attrs.cmTooltip);
+      var setter = getter.assign;
+      var value = getter(scope);
+
+      scope.$watch(attrs.cmTooltip, function(newValue, oldValue) {
+        value = newValue;
+      });
+
+      if (!!attrs.unique) {
+        element.on('show', function(ev) {
+          $('.tooltip.in').each(function() {
+            var $this = $(this);
+            var tooltip = $this.data('tooltip');
+            if (tooltip && !tooltip.$element.is(element)) {
+              $this.tooltip('hide');
+            }
+          });
+        });
+      }
+
+      element.tooltip({
+        title: function() { return angular.isFunction(value) ? value.apply(null, arguments) : value; },
+        html: true
+      });
+    }
+  };
+});
