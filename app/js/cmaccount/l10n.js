@@ -13,6 +13,7 @@
     {'weight': 2, 'code': 'ru', 'name': 'Pусский'},
     {             'code': 'sk', 'name': 'Slovenský'},
     {             'code': 'zh-tw', 'name': '中文(正體字)'},
+    {             'code': 'ja', 'name': '日本語'},
   ];
   locale.supported = _.pluck(locale.languages, 'code');
   locale.getBestSupported = function() {
