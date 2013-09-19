@@ -11,8 +11,9 @@
     <div class="device panel panel-default" data-ng-repeat="device in devices">
       <div class="panel-heading">
         <div data-ng-switch="device.nickname">
-          <h3 data-ng-switch-when="null" class="panel-title">{{ device.make }} {{ device.model }}</h3>
-          <h3 data-ng-switch-default class="panel-title">{{ device.nickname }}</h3>
+          <span data-ng-switch-when="null" class="panel-title">{{ device.make }} {{ device.model }}</span>
+          <span data-ng-switch-default class="panel-title">{{ device.nickname }}</span>
+          <span style="float: right" class="panel-title"><a title="{{ 'Remove device' | l10n:'devices.remove_device' }}" data-ng-href="/device/{{ device.id }}/remove"><i class="icon-remove"></i></a></span>
         </div>
       </div>
       <div class="panel-body">
@@ -49,8 +50,7 @@
         </div>
         <div class="col-lg-4 col-sm-4 col-12">
           <a class="btn btn-default btn-block" data-ng-href="/device/{{ device.id }}/find"><i class="icon-map-marker"></i> {{ 'Locate' | l10n:'devices.locate' }}</a>
-          <a class="btn btn-warning btn-block" data-ng-href="/device/{{ device.id }}/wipe"><i class="icon-eraser"></i> {{ 'Remote Wipe' | l10n:'devices.remote_wipe' }}</a>
-          <a class="btn btn-danger btn-block" data-ng-href="/device/{{ device.id }}/remove"><i class="icon-remove"></i> {{ 'Remove Device' | l10n:'devices.remove_device' }}</a>
+          <a class="btn btn-danger btn-block" data-ng-href="/device/{{ device.id }}/wipe"><i class="icon-eraser"></i> {{ 'Remote Wipe' | l10n:'devices.remote_wipe' }}</a>
         </div>
 
         <div class="clearfix"></div>
