@@ -232,7 +232,7 @@ var DeviceWipeController = function($scope, $routeParams, $http, $timeout, $anal
     });
 
     var hashedPassword = Util.sha512($scope.plaintextPassword);
-    SecureMessageService.sendGCM(deviceKey, hashedPassword, $scope.device.salt, {command: 'begin_locate'}).then(function() {
+    SecureMessageService.sendGCM(deviceKey, hashedPassword, $scope.device.salt, {command: 'begin_wipe'}).then(function() {
     }, function(error) {
       if (error && error.errors && Util.matchError(error.errors, 8)) {
         $scope.publicKeysExhausted = true;
