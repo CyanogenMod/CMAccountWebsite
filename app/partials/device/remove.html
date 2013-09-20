@@ -1,5 +1,5 @@
 <div class="row page-header">
-  <h3>Remove Device</h3>
+  <h3 data-l10n-text="devices.remove_device">Remove Device</h3>
   <div data-ng-switch="device.nickname" class="hidden-lg hidden-md">
     <h4 data-ng-switch-when="null">{{ device.make }} {{ device.model }}</h4>
     <h4 data-ng-switch-default>{{ device.nickname }}</h4>
@@ -14,7 +14,7 @@
     <h4 data-l10n-text="remove_device.confirm">Are you sure you want to remove this device?</h4>
     <p data-l10n-text="remove_device.warning_message">If you remove this device from your CyanogenMod Account, you will no longer be able to use features like locating or remote wiping your device.</p>
     <div>
-      <a href="/devices" class="btn btn-large btn-success" data-l10n-text="cancel">Cancel</a>
+      <a href="/devices" class="btn btn-large btn-default" data-l10n-text="cancel">Cancel</a>
       <button class="btn btn-large btn-danger" data-ng-click="remove()" data-ng-disabled="polling" data-l10n-text="continue">Continue</button>
     </div>
   </div>
