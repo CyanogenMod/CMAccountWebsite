@@ -11,10 +11,10 @@ Once you have NodeJS installed, install Grunt and Bower.
 npm install -g grunt-cli bower
 ```
 
-Once Grunt and Bower are installed, you will need to install Grunt's dependencies.
+Once Grunt and Bower are installed, you will need to install their dependencies.
 
 ```shell
-npm install
+npm install && bower install
 ```
 
 ## Running the Development Server
