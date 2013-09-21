@@ -2,6 +2,7 @@
   window.locale = window.locale || {};
   locale.languages = [
     {             'code': 'cs', 'name': 'Czech'},
+    {             'code': 'de', 'name': 'Deutsch'},
     {             'code': 'el', 'name': 'ελληνικά'},
     {'weight': 1, 'code': 'en', 'name': 'English'},
     {'weight': 5, 'code': 'es', 'name': 'Español'},
