@@ -108,10 +108,6 @@ cmaccountModule.config(function($routeProvider, $locationProvider, $httpProvider
       templateUrl: '/static/partials/account/password_reset.html',
       controller: CMAccount.AccountPasswordResetController,
     })
-    .when('/account/verify_email', {
-      templateUrl: '/static/partials/account/verify_email.html',
-      controller: CMAccount.AccountVerifyEmailController,
-    })
     .when('/help', {
       templateUrl: '/static/partials/help.html',
     })

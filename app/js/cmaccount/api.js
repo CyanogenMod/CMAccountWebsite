@@ -102,8 +102,6 @@ apiModule.factory("Account", function($resource, API_BASE, $http, TokenService) 
       available: { method: 'GET', params: { action: 'available' } },
       initiate_password_reset: { method: 'GET', params: { action: 'initiate_password_reset' } },
       reset_password: { method: 'POST', params: { action: 'reset_password' } },
-      resend_verify_email: { method: 'POST', params: { action: 'resend_verify_email' } },
-      verify_email: { method: 'POST', params: { action: 'verify_email' } },
 
       get: { method: 'GET', params: { action: 'get' }, requireToken: true },
       change_password: { method: 'POST', params: { action: 'change_password' }, requireToken: true },

@@ -28,19 +28,12 @@ var LoginController = function($rootScope, $scope, $location, AuthService) {
     params.password = hashed_password;
 
     AuthService.signin(params).then(function(result) {
-      if (result.email_verified) {
-        $location.path('/devices');
-      } else {
-        $location.path('/account/verify_email');
-      }
+      $location.path('/devices');
     }, function(errors) {
       if (Util.matchError(errors, 3)) {
         $scope.authenticationError = true;
         $scope.model = {};
         $scope.form.$setPristine();
-      } else if (Util.matchError(errors, 12)) {
-        $rootScope.verifyEmail = params.email;
-        $location.path('/account/verify_email');
       } else {
         // TODO: Throw a generic error
       }
@@ -98,29 +91,6 @@ var AccountPasswordResetController = function($scope, $routeParams, $location, A
         $location.path("/login");
       } else if (response.errors) {
         if (Util.matchError(response.errors, 7)) $scope.invalidResetKey = true;
-      }
-    });
-  };
-};
-
-var AccountVerifyEmailController = function($scope, $routeParams, $location, Account) {
-  if ($routeParams.verify_key) {
-    $scope.verifyKey = $routeParams.verify_key;
-    Account.verify_email({verify_key: $scope.verifyKey}, function(response) {
-      if (response.errors) {
-        if (Util.matchError(response.errors, 7)) {
-          $scope.verificationError = true;
-        }
-      } else {
-        $scope.emailVerified = true;
-      }
-    });
-  }
-
-  $scope.resend = function() {
-    Account.resend_verify_email({email: $scope.verifyEmail}, function(response) {
-      if (!response.errors) {
-        $scope.emailSent = true;
       }
     });
   };
@@ -321,6 +291,5 @@ _.extend(CMAccount, {
   DeviceFindController: DeviceFindController,
   DeviceWipeController: DeviceWipeController,
   DeviceRemoveController: DeviceRemoveController,
-  AccountController: AccountController,
-  AccountVerifyEmailController: AccountVerifyEmailController
+  AccountController: AccountController
 });
