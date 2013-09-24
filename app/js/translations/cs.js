@@ -12,6 +12,7 @@
       logout: "Odhlásit",
       continue: "Pokračovat",
       cancel: "Zrušit",
+      terms_of_service: "Podmínky služby",
       privacy_policy: "Zásady ochrany osobních údajů",
       alert_error: 'Chyba!',
 
@@ -123,6 +124,19 @@
         problem: "Při odebírání zařízení z účtu došlo k potížím.",
         confirm: "Opravdu chcete odebrato toto zařízení?",
         warning_message: "Pokud odeberete zařízení z účtu CyanogenMod, nebude možné využívat pro toto zařízení služby lokalizace nebo vzdáleného vyčištění.",
+      },
+
+      // Account Partial
+      account: {
+        title: "Účet",
+        alert_invalid: "Vložené stávající heslo je špatné.",
+        alert_success: "Heslo bylo úspěšně změněno.",
+        change_password: "Změnit heslo",
+        current_password: "Stávající heslo",
+        new_password: "Nové heslo",
+        confirm_new_password: "Potvrdit nové heslo",
+        error_complexity: "Heslo musí být alespoň 8 znaků dlouhé.",
+        error_match: "Zadaná hesla nejsou stejná."
       },
     });
   }]);
