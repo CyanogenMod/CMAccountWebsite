@@ -12,12 +12,14 @@
       logout: "Odhlásiť sa",
       continue: "Pokračovať",
       cancel: "Zrušiť",
+      terms_of_service: "Podmienky poskytovania služby",
       privacy_policy: "Zásady ochrany osobných údajov",
+      alert_error: 'Chyba!',
 
       // Top Navigation
       navbar: {
         about: 'O projekte',
-        download: 'Prevziať',
+        download: 'Na stiahnutie',
         devices: 'Zariadenia',
         blog: 'Blog',
         forum: 'Fórum',
@@ -54,7 +56,7 @@
 
       // Learn More Partial
       learn_more: {
-        learn_more: "Dozvedieť sa viac",
+        learn_more: "Podrobnejšie informácie",
 
         what_is_cmaccount: {
           title: "Čo je účet CyanogenMod?",
@@ -71,7 +73,7 @@
           required: "Vytvorenie účtu CyanogenMod vyžaduje iba základné informácie vrátane e-mailovej adresy.",
           // Note: This string ends with a link to "Privacy Policy"
           // TODO(ctso): Implement a way to safely embed html in the translations.
-          usage: "CyanogenMod nikdy nebude predávať vaše osobné údaje. Tieto informácie budú použité iba v súlade s našimi",
+          usage: "CyanogenMod nikdy nebude predávať vaše osobné údaje. Použitie týchto informácií dodržiava naše: ",
         },
 
         secure: {
@@ -107,6 +109,7 @@
       secure_message: {
         locate_device: "Lokalizovať zariadenie",
         authentication_failure: "Overenie zlyhalo!",
+        encryption_failure: "Vyskytol sa problém s otváraním zabezpečeného kanála k zariadeniu. Prosím skúste to znova za pár minút.",
         invalid_password: "Zadané heslo je neplatné alebo Vaša relácia vypršala",
 
         enter_password: "Prosím zadajte Vaše heslo pre overenie so zariadením.",
@@ -121,6 +124,19 @@
         problem: "Vyskytol sa problém pri odstraňovaní tohto zariadenia z Vášho účtu.",
         confirm: "Ste si istý, že chcete odstrániť toto zariadenie?",
         warning_message: "Ak odstránite toto zariadenie z Vášho účtu CyanogenMod, nebudete už môcť používať funkcie ako sú lokalizácia alebo vzdialené vymazanie údajov zariadenia.",
+      },
+
+       // Account Partial
+      account: {
+        title: "Môj účet",
+        alert_invalid: "Aktuálne heslo je nesprávne.",
+        alert_success: "Vaše heslo bolo úspešne zmenené.",
+        change_password: "Zmeniť heslo",
+        current_password: "Aktuálne heslo",
+        new_password: "Nové heslo",
+        confirm_new_password: "Potvrďte nové heslo",
+        error_complexity: "Vaše heslo musí mať najmenej osem (8) znakov.",
+        error_match: "Zadané heslá sa nezhodujú."
       },
     });
   }]);
