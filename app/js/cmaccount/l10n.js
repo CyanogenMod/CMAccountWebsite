@@ -15,6 +15,7 @@
     {'weight': 3, 'code': 'pt', 'name': 'Português'},
     {'weight': 2, 'code': 'ru', 'name': 'Pусский'},
     {             'code': 'sk', 'name': 'Slovenský'},
+    {             'code': 'zh-cn', 'name': '中文(简体)'},
     {             'code': 'zh-tw', 'name': '中文(正體字)'},
   ];
   locale.supported = _.pluck(locale.languages, 'code');
