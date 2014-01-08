@@ -8,6 +8,7 @@
       logout: "Wyloguj",
       continue: "Kontynuuj",
       cancel: "Anuluj",
+      terms_of_service: "Warunki korzystania",
       privacy_policy: "Polityka prywatności",
       alert_error: 'Błąd!',
 
