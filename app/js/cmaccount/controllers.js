@@ -238,6 +238,74 @@ var DeviceWipeController = function($scope, $routeParams, $http, $timeout, $anal
   });
 };
 
+var DeviceAlertController = function($scope, $routeParams, $http, $timeout, $analytics, API_BASE, Device, SecureMessageService) {
+  // Setup scope variables
+  var deviceKey = $routeParams.device_id;
+  $scope.device = Device.get({'id': deviceKey});
+
+  // Reset the view
+  $scope.alertStarted = false;
+  $scope.havePassword = false;
+  $scope.alertTimeout = false;
+  $scope.keyExchangeFailure = false;
+
+  var timeoutPromise;
+
+  var handleFailure = function() {
+    $timeout.cancel(timeoutPromise);
+    $scope.plaintextPassword = undefined;
+    $scope.alertStarted = false;
+    $scope.havePassword = false;
+    $scope.keyExchangeFailure = true;
+    $scope.alertTimeout = false;
+  };
+
+  // Hook up the authenticate method to the scope
+  $scope.authenticate = function() {
+    $scope.havePassword = true;
+    
+    SecureMessageService.ready().then(function() {
+    }, function() {
+      // Error callback, key exchange failure.
+      handleFailure();
+    });
+
+    var hashedPassword = Util.sha512($scope.plaintextPassword);
+    SecureMessageService.sendGCM(deviceKey, hashedPassword, $scope.device.salt, {command: 'begin_alert'}).then(function() {
+    }, function(error) {
+      if (error && error.errors && Util.matchError(error.errors, 8)) {
+        $scope.publicKeysExhausted = true;
+      }
+      handleFailure();
+    });
+
+    timeoutPromise = $timeout(function() {
+      $scope.alertTimeout = true;
+      $analytics.eventTrack('alertTimeout', { category: 'device' });
+    }, 30000);
+  };
+
+  var reportSuccessfulAlert = _.once(function() {
+    $scope.$apply(function() {
+      $analytics.eventTrack('alertSuccess', { category: 'device' });
+    });
+  });
+
+  $scope.$on('secure_message:alert_started', function(command, message) {
+    reportSuccessfulAlert();
+
+    // Make sure it is for the right device
+    if (deviceKey != message.device.id) return;
+
+    // Update the scope with the new device record
+    $scope.device = message.device;
+
+    $scope.$apply(function() {
+      $scope.alertStarted = true;
+    });
+  });
+};
+
 var DeviceRemoveController = function($rootScope, $scope, $routeParams, $location, $timeout, $analytics, Device) {
   // Setup scope variables
   var deviceKey = $routeParams.device_id;
@@ -290,6 +358,7 @@ _.extend(CMAccount, {
   AccountPasswordResetController: AccountPasswordResetController,
   DeviceFindController: DeviceFindController,
   DeviceWipeController: DeviceWipeController,
+  DeviceAlertController: DeviceAlertController,
   DeviceRemoveController: DeviceRemoveController,
   AccountController: AccountController
 });

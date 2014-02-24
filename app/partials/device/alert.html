@@ -1,0 +1,82 @@
+<div class="row page-header">
+  <h3 data-l10n-text="devices.remote_ring">Remote Ring</h3>
+  <div data-ng-switch="device.nickname" class="hidden-lg hidden-md">
+    <h4 data-ng-switch-when="null">{{ device.make }} {{ device.model }}</h4>
+    <h4 data-ng-switch-default>{{ device.nickname }}</h4>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-9">
+    <div class="alert alert-warning" data-ng-show="!alertStarted && alertTimeout">
+      We are still attempting to establish a secure connection to your device.  Your device may not have an active Internet connection, or may be powered off.  You can continue to wait, or <a class="alert-link" href="javascript:location.reload()">refresh the page</a> to retry. 
+    </div>
+
+    <!-- password prompt -->
+    <div data-ng-show="!alertStarted && !havePassword" style="text-align: center">
+      <div class="alert alert-danger" data-ng-show="keyExchangeFailure && !publicKeysExhausted">
+        <strong data-l10n-text="secure_message.authentication_failure">Authentication Failure!</strong>  <span data-l10n-text="secure_message.invalid_password">The password you entered was invalid or your session has expired.</span>
+      </div>
+      <div class="alert alert-danger" data-ng-show="publicKeysExhausted">
+        <span data-l10n-text="secure_message.encryption_failure">There was a problem opening a secure channel to your device.  Please try again in a few minutes.</span>
+      </div>
+      <h3 data-l10n-text="secure_message.enter_password">Please enter your password to authenticate with your device.</h3>
+      <form class="form-inline">
+        <div class="input-group col-lg-offset-3 col-lg-6">
+          <input class="form-control" type="password" placeholder="Password" data-ng-model="plaintextPassword" data-focus>
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-default" data-ng-click="authenticate()" data-l10n-text="continue">Continue</button>
+          </span>
+        </div>
+        <div class="clearfix"></div>
+      </form>
+    </div>
+
+    <div data-ng-show="!alertStarted && havePassword" style="text-align: center">
+      <p><i class="icon-refresh icon-spin icon-4x"></i></p>
+      <h3 data-l10n-text="secure_message.wait_ring">Please wait while we attempt to ring your device.</h3>
+    </div>
+
+    <div data-ng-show="wipeStarted" style="text-align: center">
+      <h3 data-l10n-text="secure_message.alert_started">Ring successfully started.</h3>
+    </div>
+
+  </div>
+  <div class="col-lg-3 visible-lg">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div data-ng-switch="device.nickname">
+          <h3 data-ng-switch-when="null" class="panel-title">{{ device.make }} {{ device.model }}</h3>
+          <h3 data-ng-switch-default class="panel-title">{{ device.nickname }}</h3>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <div class="device-detail device-detail-block">
+          <span data-l10n-text="devices.cyanogenmod_version">CyanogenMod Version</span>
+          <span>{{ device.cm_version }}</span>
+        </div>
+
+        <div class="device-detail device-detail-block">
+          <span data-l10n-text="devices.android_version">Android Version</span>
+          <span>{{ device.android_version }}</span>
+        </div>
+
+        <div class="device-detail device-detail-block">
+          <span data-l10n-text="devices.last_seen">Last Seen</span>
+          <span>{{ device.last_seen | date:'short' }}</span>
+        </div>
+
+        <div class="device-detail device-detail-block">
+          <span data-l10n-text="devices.date_registered">Date Registered</span>
+          <span>{{ device.registration_date | date:'short' }}</span>
+        </div>
+          
+        <div class="device-detail device-detail-block">
+          <span data-l10n-text="devices.carrier">Carrier</span>
+          <span>{{ device.carrier }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

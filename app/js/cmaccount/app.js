@@ -96,6 +96,10 @@ cmaccountModule.config(function($routeProvider, $locationProvider, $httpProvider
       templateUrl: '/static/partials/device/wipe.html',
       controller: CMAccount.DeviceWipeController,
     })
+    .when('/device/:device_id/alert', {
+      templateUrl: '/static/partials/device/alert.html',
+      controller: CMAccount.DeviceAlertController,
+    })
     .when('/device/:device_id/remove', {
       templateUrl: '/static/partials/device/remove.html',
       controller: CMAccount.DeviceRemoveController,
