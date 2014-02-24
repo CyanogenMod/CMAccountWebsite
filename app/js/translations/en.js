@@ -103,6 +103,8 @@
 
         remote_wipe: "Remote Wipe",
         remove_device: "Remove Device",
+
+        remote_ring: "Remote Ring",
       },
 
       // Secure Message Partials (find/wipe)
@@ -117,6 +119,8 @@
         wait_locate: "Please wait while we attempt to locate your device.",
         wait_wipe: "Please wait while we attempt to wipe your device.",
         wipe_started: "Wipe successfully started.",
+        wait_ring: "Please wait while we attempt to ring your device.",
+        ring_started: "Ring successfully started.",
       },
 
       // Remove Device Partial
