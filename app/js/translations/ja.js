@@ -6,19 +6,19 @@
   angular.module('cmaccount.l10n.ja', ['l10n']).config(['l10nProvider', function(l10n) {
     l10n.add('ja', {
       // Generic
-      email: "Eメールアドレス",
+      email: "メールアドレス",
       password: "パスワード",
       confirm_password: "パスワードを確認",
       logout: "ログアウト",
       continue: "続ける",
       cancel: "キャンセル",
       terms_of_service: "利用規約",
-      privacy_policy: "プライバシー ポリシー",
-      alert_error: 'エラー！',
+      privacy_policy: "プライバシーポリシー",
+      alert_error: 'エラー',
 
       // Top Navigation
       navbar: {
-        about: 'アバウト',
+        about: 'About',
         download: 'ダウンロード',
         devices: 'デバイス',
         blog: 'ブログ',
@@ -37,7 +37,7 @@
       login: {
         title: "CyanogenModアカウントにサインインする",
         signin: "サインイン",
-        reset_password: "パスワードをリセットしてください",
+        reset_password: "パスワードをリセットする",
         no_account: "アカウントを持っていませんか？",
       },
 
@@ -56,7 +56,7 @@
 
       // Learn More Partial
       learn_more: {
-        learn_more: "もっと",
+        learn_more: "さらに詳しく",
 
         what_is_cmaccount: {
           title: "CyanogenModアカウントとは何ですか？",
@@ -79,12 +79,12 @@
         secure: {
           title: "安全ですか？",
           communication: "お使いのブラウザやデバイスと我々のサーバー間すべての通信はSSL暗号化されています。さらに、我々のサーバーに平文パスワードを送信することはありません。",
-          priority: "\"私の電話を探す\" および \"リモートワイプ\" 機能の性質を考えると、セキュリティは私達の最優先事項です。最初にあなたのパスワードを使用して認証することなく、デバイスを見つけたり、ワイプすることは不可能です。位置情報を含むお使いのデバイスとのすべての通信は暗号化され、 CyanogenModサーバ、 関係者またはパートナーにアクセスできません。",
+          priority: "\"私の電話を探す\" および \"遠隔データ消去\" 機能の性質を考えると、セキュリティは私達の最優先事項です。最初にあなたのパスワードを使用して認証することなく、デバイスを見つけたり、データを消去することは不可能です。位置情報を含むお使いのデバイスとのすべての通信は暗号化され、 CyanogenModサーバ、 関係者またはパートナーにアクセスできません。",
         },
 
         benefits: {
           title: "CyanogenModアカウントを取得すると何ができますか？",
-          text: "CyanogenModアカウントを取得することにより、少なくとも \"私の電話を探す\" および \"リモートワイプ\" 機能を使用中のデバイスに提供します。",
+          text: "CyanogenModアカウントを取得することにより、少なくとも \"私の電話を探す\" および \"遠隔データ消去\" 機能を使用中のデバイスに提供します。",
         },
       },
 
@@ -96,34 +96,34 @@
         android_version: "Androidのバージョン",
         last_seen: "最終ログイン日",
         date_registered: "登録日",
-        carrier: "通信事業者",
+        carrier: "キャリア",
 
         locate: "所在の特定",
         locate_device: "デバイスを見つける",
 
-        remote_wipe: "リモートワイプ",
+        remote_wipe: "遠隔データ消去",
         remove_device: "デバイスの削除",
       },
 
       // Secure Message Partials (find/wipe)
       secure_message: {
         locate_device: "デバイスの所在を確認",
-        authentication_failure: "認証に失敗しました！",
+        authentication_failure: "認証に失敗しました。",
         encryption_failure: "お使いのデバイスへの安全な通信路を開く際に問題が発生しました。数分後にもう一度試してください。",
         invalid_password: "入力したパスワードが無効か、セッションが期限切れになりました",
 
         enter_password: "お使いのデバイスで認証を行うパスワードを入力してください。",
         wait_secure_channel: "お使いのデバイスに安全な通信路を開いています、お待ちください。",
         wait_locate: "お使いのデバイスの所在を確認しています、お待ちください。",
-        wait_wipe: "お使いのデバイスのワイプを行います、お待ちください。",
-        wipe_started: "ワイプを正常に開始しました。",
+        wait_wipe: "お使いのデバイスのデータの消去を行います、お待ちください。",
+        wipe_started: "データの消去を正常に開始しました。",
       },
 
       // Remove Device Partial
       remove_device: {
         problem: "アカウントからこのデバイスを削除する際に問題が発生しました。",
         confirm: "このデバイスを削除してもよろしいですか？",
-        warning_message: "CyanogenModアカウントからこのデバイスを削除した場合、所在の特定やリモートワイプなどの機能を使用することができなくなります。",
+        warning_message: "CyanogenModアカウントからこのデバイスを削除した場合、所在の特定や遠隔データ消去などの機能を使用することができなくなります。",
       },
 
       // Account Partial
