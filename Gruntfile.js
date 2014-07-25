@@ -7,6 +7,37 @@ var rewriteRulesSnippet = require('grunt-connect-rewrite/lib/utils').rewriteRequ
 var mountFolder = function(connect, dir) {
   return connect.static(require('path').resolve(dir));
 };
+var querystring = require('querystring');
+var requestId = 0;
+
+// quick and dirty function for helping debug proxied requests to a local CMIdServer
+var trafficDebugger = function(req, res, next) {
+    var currentReqId = requestId++;
+    // log request data
+    if (req.method == 'POST') {
+        body = ""
+        // collect the data, this is DEBUG code only in production someone could blow up your memory with a huge request
+        req.on('data', function(data) {
+          body += data;
+        });
+        req.on('end', function() {
+          console.log(new Date() + " - Request Received - Id: " + currentReqId + " " + req.method + " " + req.url + " " + req.httpVersion +
+                      " headers " + JSON.stringify(req.headers) + " body: " + JSON.stringify(querystring.parse(body)));
+        });
+     }
+     else {
+        console.log(new Date() + " - Request Received - Id: " + currentReqId + " " + req.method + " " + req.url + " " + req.httpVersion + " headers " + JSON.stringify(req.headers));
+     }
+
+     // log the response data
+     res.on('finish', function () {
+        console.log(new Date() + " - Response sent - Id: " + currentReqId + " statusCode: " + res.statusCode +  " headers: " + JSON.stringify(res._headers));
+     });
+
+     // pass control to the next middleware layer
+     next();
+}
+
 
 module.exports = function(grunt) {
   // Load everything from package.json
@@ -30,9 +61,11 @@ module.exports = function(grunt) {
       },
       local: {
         options: {
+          hostname: '*',
           port: 8181,
           middleware: function(connect) {
             return [
+              trafficDebugger,
               proxySnippet,
               rewriteRulesSnippet,
               lrSnippet,
@@ -42,12 +75,17 @@ module.exports = function(grunt) {
         },
         proxies: [{
           context: '/api',
-          host: 'localhost',
+          host: '0.0.0.0',
+          port: 8080
+        },
+        {
+          context: '/oauth2',
+          host: '0.0.0.0',
           port: 8080
         },
         {
           context: '/_ah',
-          host: 'localhost',
+          host: '0.0.0.0',
           port: 8080
         }]
       },
